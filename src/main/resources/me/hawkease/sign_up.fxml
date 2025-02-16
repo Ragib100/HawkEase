@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="742.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sign_up_controller">
+   <children>
+      <ImageView fitHeight="489.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Auth_Background.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="take_user_name" layoutX="510.0" layoutY="206.0" prefHeight="34.0" prefWidth="194.0" promptText="Username">
+         <font>
+            <Font name="Times New Roman" size="20.0" />
+         </font></TextField>
+      <TextField fx:id="take_email_address" layoutX="510.0" layoutY="251.0" prefHeight="34.0" prefWidth="194.0" promptText="Email address">
+         <font>
+            <Font name="Times New Roman" size="20.0" />
+         </font></TextField>
+      <Button layoutX="511.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#sign_up" prefHeight="26.0" prefWidth="61.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0;" text="Sign up" textFill="#1e0101" />
+      <ComboBox fx:id="sign_up_type" layoutX="510.0" layoutY="384.0" prefHeight="34.0" prefWidth="194.0" promptText="User type">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <effect>
+            <Bloom threshold="0.87" />
+         </effect>
+      </ComboBox>
+      <PasswordField fx:id="take_password" layoutX="510.0" layoutY="295.0" prefHeight="34.0" prefWidth="194.0" promptText="Password ">
+         <font>
+            <Font name="Times New Roman" size="20.0" />
+         </font></PasswordField>
+      <PasswordField fx:id="take_password_again" layoutX="510.0" layoutY="340.0" prefHeight="34.0" prefWidth="194.0" promptText="Confirm Password">
+         <font>
+            <Font name="Times New Roman" size="20.0" />
+         </font></PasswordField>
+      <Button layoutX="579.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#log_in_from_sign_up_page" prefHeight="26.0" prefWidth="125.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0;" text="Already a member?" textFill="#1e0101" />
+      <Text fill="#fffefe" fontSmoothingType="LCD" layoutX="105.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HawkEase community">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <TextFlow fx:id="password_strength_message" layoutX="143.0" layoutY="296.0" prefHeight="34.0" prefWidth="339.0" />
+      <TextFlow fx:id="password_same_message" layoutX="447.0" layoutY="348.0" prefHeight="36.0" prefWidth="23.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="634.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Hawkease.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="#faf4f4" fontSmoothingType="LCD" layoutX="105.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
