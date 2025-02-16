@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane layoutY="-4.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.AdminhomepageController">
+         <top>
+             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                 <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="My Profile"/>
+                 <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Logout"/>
+             </HBox>
+         </top>
+         <left>
+             <VBox prefHeight="229.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                 <Button mnemonicParsing="false" onMouseClicked="#allocate_stall_and_rent" prefHeight="75.0"
+                         prefWidth="100.0" text="Allocate Stall &amp; Rent"/>
+                 <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="75.0" prefWidth="100.0"
+                         text="Pending Requests"/>
+                 <Button mnemonicParsing="false" onMouseClicked="#rent_prices" prefHeight="75.0" prefWidth="100.0"
+                         text="Rent Prices"/>
+                 <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="75.0" prefWidth="100.0"
+                         text="Reports &amp; Analytics"/>
+             </VBox>
+         </left>
+         <center>
+            <StackPane prefHeight="300.0" prefWidth="501.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>

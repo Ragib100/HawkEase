@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.pendingReq">
+
+    <!-- TableView for displaying users -->
+    <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
+        <columns>
+            <!-- Name Column -->
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="250"/>
+
+            <!-- Status Column (Radio Buttons for Accepted/Rejected) -->
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="350"/>
+        </columns>
+    </TableView>
+
+    <!-- HBox for Pagination and Button -->
+    <HBox spacing="10" alignment="CENTER">
+        <Pagination fx:id="pagination" maxPageIndicatorCount="5"/>
+        <Button fx:id="actionButton" text="Perform Action" onMouseClicked="#doUpdate"/>
+    </HBox>
+
+</VBox>
