@@ -6,6 +6,6 @@ module me.hawkease {
     requires java.sql;
     requires mysql.connector.j;
 
-    opens me.hawkease to javafx.fxml;
+    opens me.hawkease to javafx.fxml, javafx.base;
     exports me.hawkease;
 }

@@ -37,22 +37,19 @@ public class users_sql {
         }
     }
 
-    public void check_user(String email, String password,String type) {
+    public boolean check_user(String email, String password,String type) {
         String query = "SELECT * FROM users WHERE email = ? AND password = ? AND type = ?";
         try(PreparedStatement st = con.prepareStatement(query)){
             st.setString(1, email);
             st.setString(2, password);
             st.setString(3, type);
             ResultSet rs = st.executeQuery();
-            if(rs.next()) {
-                System.out.println("User found!");
-            }
-            else{
-                System.out.println("User not found!");
-            }
+            if(rs.next()) return true;
+            else return false;
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        return false;
     }
 }
