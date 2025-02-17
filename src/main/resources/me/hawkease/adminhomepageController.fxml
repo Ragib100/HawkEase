@@ -8,9 +8,13 @@
 
 <BorderPane layoutY="-4.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.AdminhomepageController">
          <top>
-             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                 <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="My Profile" />
-                 <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="Logout" />
+             <HBox alignment="BASELINE_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <VBox alignment="TOP_RIGHT" prefHeight="107.0" prefWidth="100.0">
+            <children>
+                       <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="103.0" text="My Profile" />
+                       <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="101.0" text="Logout" />
+            </children>
+         </VBox>
              </HBox>
          </top>
          <left>
@@ -22,6 +26,6 @@
              </VBox>
          </left>
          <center>
-            <StackPane fx:id="stack_pane" prefHeight="300.0" prefWidth="501.0" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="page" prefHeight="300.0" prefWidth="501.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>

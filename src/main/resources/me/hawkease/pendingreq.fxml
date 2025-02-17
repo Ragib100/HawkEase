@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.pendingReq">
+<VBox alignment="TOP_CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.pendingReq">
 
     <!-- TableView for displaying users -->
     <TableView fx:id="tableView" prefHeight="400" prefWidth="600">
         <columns>
             <!-- Name Column -->
-            <TableColumn fx:id="nameColumn" text="Name" prefWidth="250"/>
+            <TableColumn fx:id="nameColumn" prefWidth="250" text="Name" />
 
             <!-- Status Column (Radio Buttons for Accepted/Rejected) -->
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="350"/>
+            <TableColumn fx:id="statusColumn" prefWidth="350" text="Status" />
         </columns>
     </TableView>
 
     <!-- HBox for Pagination and Button -->
-    <HBox spacing="10" alignment="CENTER">
-        <Pagination fx:id="pagination" maxPageIndicatorCount="5"/>
-        <Button fx:id="actionButton" text="Perform Action" onMouseClicked="#doUpdate"/>
+    <HBox alignment="CENTER" spacing="10">
+        <Pagination fx:id="pagination" maxPageIndicatorCount="5" />
+        <Button fx:id="actionButton" onMouseClicked="#doUpdate" text="Perform Action" />
     </HBox>
 
 </VBox>

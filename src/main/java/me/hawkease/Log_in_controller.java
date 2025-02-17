@@ -35,15 +35,14 @@ public class Log_in_controller implements Initializable {
         String password = take_password.getText();
         String type = user_type.getValue();
         users_sql st = new users_sql();
-//        boolean flag = st.check_user(email,password,type);
-        Boolean flag=true;
+        boolean flag = st.check_user(email,password,type);
         if(flag) {
             if(type.equals("Admin")) {
-                try{
-                    fxml_loader fxml = new fxml_loader(event);
-                    fxml.load_fxml("adminhomepageController.fxml");
+                try {
+                    fxml_loader fxmlLoader = new fxml_loader(event);
+                    fxmlLoader.load_fxml("adminhomepageController.fxml");
                 }
-                catch(IOException e){
+                catch (IOException e){
                     System.out.println("Error in loading fxml");
                 }
             }

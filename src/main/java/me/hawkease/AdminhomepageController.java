@@ -5,57 +5,58 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
+import java.io.IOException;
+
 public class AdminhomepageController {
 
     @FXML
-    private StackPane stack_pane;
+    private StackPane page;
 
     @FXML
-    void allocate_stall_and_rent(MouseEvent event) {
-        try{
-            stack_pane.getChildren().clear();
+    void allocate_stall_and_rent(MouseEvent event){
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("allocatestallrent.fxml"));
-            stack_pane.getChildren().add(fxmlLoader.load());
+            page.getChildren().clear();
+            page.getChildren().add(fxmlLoader.load());
         }
-        catch(Exception e){
-            System.out.println("Error loading fxml");
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
         }
     }
 
     @FXML
     void pending_req(MouseEvent event) {
-        try{
-            stack_pane.getChildren().clear();
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pendingreq.fxml"));
-            stack_pane.getChildren().add(fxmlLoader.load());
+            page.getChildren().clear();
+            page.getChildren().add(fxmlLoader.load());
         }
-        catch(Exception e){
-            System.out.println("Error loading fxml");
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
         }
     }
 
     @FXML
     void rent_prices(MouseEvent event) {
-        try{
-//            fxml_loader fxml = new fxml_loader(event);
-//            fxml.load_fxml("allocatestallrent.fxml");
-                System.out.println("Rent Prices");
-    
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rent_prices.fxml"));
+            page.getChildren().clear();
+            page.getChildren().add(fxmlLoader.load());
         }
-        catch(Exception e){
-            System.out.println("Error loading fxml");
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
         }
     }
 
     @FXML
     void reports_analytics(MouseEvent event) {
-        try{
-//            fxml_loader fxml = new fxml_loader(event);
-//            fxml.load_fxml("allocatestallrent.fxml");
-            System.out.println("Report Analytics");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reports_analytics.fxml"));
+            page.getChildren().clear();
+            page.getChildren().add(fxmlLoader.load());
         }
-        catch(Exception e){
-            System.out.println("Error loading fxml");
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
         }
     }
 
