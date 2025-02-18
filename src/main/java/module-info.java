@@ -5,6 +5,7 @@ module me.hawkease {
     requires java.desktop;
     requires java.sql;
     requires mysql.connector.j;
+    requires jdk.httpserver;
 
     opens me.hawkease to javafx.fxml, javafx.base;
     exports me.hawkease;
