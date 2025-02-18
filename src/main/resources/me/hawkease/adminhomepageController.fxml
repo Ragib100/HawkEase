@@ -11,8 +11,8 @@
              <HBox alignment="BASELINE_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <VBox alignment="TOP_RIGHT" prefHeight="107.0" prefWidth="100.0">
             <children>
-                       <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="103.0" text="My Profile" />
-                       <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="101.0" text="Logout" />
+                       <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="103.0" text="My Profile" />
+                       <Button mnemonicParsing="false" onMouseClicked="#log_out" prefHeight="50.0" prefWidth="101.0" text="Logout" />
             </children>
          </VBox>
              </HBox>

@@ -26,7 +26,13 @@ public class Log_in_controller implements Initializable {
 
     @FXML
     void forgot_password(MouseEvent event) {
-
+        try{
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("forgot_password_controller.fxml");
+        }
+        catch(IOException e){
+            System.out.println("Try again");
+        }
     }
 
     @FXML

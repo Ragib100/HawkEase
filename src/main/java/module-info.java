@@ -6,6 +6,10 @@ module me.hawkease {
     requires java.sql;
     requires mysql.connector.j;
     requires jdk.httpserver;
+    requires com.google.auth.oauth2;
+    requires firebase.admin;
+    requires com.google.auth;
+    requires jakarta.mail;
 
     opens me.hawkease to javafx.fxml, javafx.base;
     exports me.hawkease;

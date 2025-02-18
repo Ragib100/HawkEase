@@ -60,4 +60,20 @@ public class AdminhomepageController {
         }
     }
 
+    @FXML
+    void log_out(MouseEvent event) {
+        try{
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("welcome_page.fxml");
+        }
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
+        }
+    }
+
+    @FXML
+    void open_profile(MouseEvent event) {
+
+    }
+
 }

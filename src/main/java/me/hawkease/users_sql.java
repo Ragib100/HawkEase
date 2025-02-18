@@ -52,4 +52,24 @@ public class users_sql {
         }
         return false;
     }
+
+    public void change_password(String email, String password, String type) {
+        System.out.println(email + " " + password + " " + type);
+        String query = "UPDATE users SET password = ? WHERE email = ? AND type = ?";
+        try(PreparedStatement st = con.prepareStatement(query)){
+            st.setString(1, password);
+            st.setString(2, email);
+            st.setString(3, type);
+            int rowsUpdated = st.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Password changed successfully!");
+            }
+            else {
+                System.out.println("Password change failed.");
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
