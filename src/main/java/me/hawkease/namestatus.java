@@ -5,13 +5,13 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-public class NameStatus {
+public class namestatus {
     private final StringProperty name;
     private final RadioButton acceptedRadio;
     private final RadioButton rejectedRadio;
     private final ToggleGroup toggleGroup;
 
-    public NameStatus(String name) {
+    public namestatus(String name) {
         this.name = new SimpleStringProperty(name);
         toggleGroup = new ToggleGroup();
 

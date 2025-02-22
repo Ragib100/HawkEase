@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane layoutY="-4.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sellerpage">
+<BorderPane layoutY="-4.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
     <top>
         <HBox alignment="BASELINE_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <VBox alignment="TOP_RIGHT" prefHeight="107.0" prefWidth="100.0">

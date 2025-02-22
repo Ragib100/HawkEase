@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class AdminhomepageController {
+public class admin_homepage_controller {
 
     @FXML
     private StackPane page;
@@ -64,7 +64,7 @@ public class AdminhomepageController {
     void log_out(MouseEvent event) {
         try{
             fxml_loader fxmlLoader = new fxml_loader(event);
-            fxmlLoader.load_fxml("welcome_page.fxml");
+            fxmlLoader.load_fxml("log_in.fxml");
         }
         catch (IOException e){
             System.out.println("Error in loading fxml");

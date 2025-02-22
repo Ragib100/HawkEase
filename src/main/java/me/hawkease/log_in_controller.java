@@ -13,7 +13,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class Log_in_controller implements Initializable {
+public class log_in_controller implements Initializable {
 
     @FXML
     private PasswordField take_password;
@@ -43,15 +43,30 @@ public class Log_in_controller implements Initializable {
         users_sql st = new users_sql();
         boolean flag = st.check_user(email,password,type);
         if(flag) {
+            fxml_loader fxmlLoader = new fxml_loader(event);
             if(type.equals("Admin")) {
-                try {
-                    fxml_loader fxmlLoader = new fxml_loader(event);
+                try{
                     fxmlLoader.load_fxml("adminhomepageController.fxml");
                 }
-                catch (IOException e){
-                    System.out.println("Error in loading fxml");
+                catch(IOException e){
+                    System.out.println("Try again");
+                }
+            } else if (type.equals("Buyer")) {
+                try{
+                    fxmlLoader.load_fxml("buyerhomepageController.fxml");
+                }
+                catch(IOException e){
+                    System.out.println("Try again");
+                }
+            } else if (type.equals("Seller")) {
+                try{
+                    fxmlLoader.load_fxml("sellerhomepageController.fxml");
+                }
+                catch(IOException e) {
+                    System.out.println("Try again");
                 }
             }
+
         }
     }
 

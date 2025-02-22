@@ -5,7 +5,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class Welcome_page {
+public class welcome_page {
 
     @FXML
     void get_started(MouseEvent event) throws IOException {

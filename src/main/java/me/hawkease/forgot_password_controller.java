@@ -1,6 +1,5 @@
 package me.hawkease;
 
-import jakarta.mail.MessagingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -35,8 +34,8 @@ public class forgot_password_controller {
     @FXML
     void send_email(MouseEvent event){
         try{
-            SendEmail sendemail = new SendEmail();
-            otp = SecureOTPGenerator.generateOTP();
+            send_email sendemail = new send_email();
+            otp = secure_otp_generator.generateOTP();
             sendemail.sendEmail(email.getText(),otp);
         }
         catch(Exception e){

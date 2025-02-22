@@ -32,6 +32,6 @@
       <Label layoutX="451.0" layoutY="101.0" prefHeight="30.0" prefWidth="98.0" text="For payment:" />
       <Label layoutX="69.0" layoutY="281.0" prefHeight="30.0" prefWidth="88.0" text="Transaction ID:" />
       <TextField layoutX="163.0" layoutY="281.0" />
-      <Button layoutX="243.0" layoutY="331.0" mnemonicParsing="false" onMouseClicked="#verifyy" prefHeight="26.0" prefWidth="88.0" text="Update" />
+      <Button layoutX="243.0" layoutY="331.0" mnemonicParsing="false" onMouseClicked="#verify" prefHeight="26.0" prefWidth="88.0" text="Update" />
    </children>
 </AnchorPane>

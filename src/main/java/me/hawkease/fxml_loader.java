@@ -14,12 +14,16 @@ public class fxml_loader {
         this.event = event;
     }
 
-    public Node load_fxml(String path) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-        Parent root = loader.load();
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-        return null;
+    public void load_fxml(String path) throws IOException {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (IOException e){
+            System.out.println("Error in loading fxml");
+        }
     }
 }

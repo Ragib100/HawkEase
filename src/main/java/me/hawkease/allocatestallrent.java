@@ -1,80 +1,64 @@
 package me.hawkease;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.InetSocketAddress;
-import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpExchange;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class allocatestallrent {
 
     @FXML
+    public BorderPane page;
+
+    @FXML
     private Text massage;
 
-    private static final int PORT = 8080;
+    @FXML
+    private TextField rent_amount;
+
+    private double selectedLat = -180;
+    private double selectedLon = -180;
+    private ArrayList<LocationInfo> locations = new ArrayList<>();
 
     @FXML
-    public void initialize() {
-        startHttpServer();
-    }
-
-    @FXML
-    private void openmap() {
-        try {
-            Desktop.getDesktop().browse(new URI("http://localhost/open_the_map.html"));
-        } catch (IOException | URISyntaxException e) {
-            System.out.println("Error opening map");
-        }
-    }
-
-    private void startHttpServer() {
-        try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
-            CoordinateHandler coordinateHandler = new CoordinateHandler(this); // Pass reference of outer class
-            server.createContext("/coordinates", coordinateHandler);
-            server.setExecutor(null);
-            server.start();
-            System.out.println("Server started on port " + PORT);
-        } catch (IOException e) {
-            System.out.println("Error starting HTTP server");
-        }
-    }
-
-    // Method to update the text
-    public void updateMassage(String text) {
-        Platform.runLater(() -> {
-            massage.setText("Location: " + text);
-            massage.setVisible(true);
-        });
-    }
-
-    class CoordinateHandler implements HttpHandler {
-        private allocatestallrent parent; // Reference to outer class
-
-        public CoordinateHandler(allocatestallrent parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            if ("GET".equals(exchange.getRequestMethod())) {
-                String query = exchange.getRequestURI().getQuery();
-                System.out.println("Coordinates received: " + query);
-
-                // Update UI using the method in the outer class
-                parent.updateMassage(query);
-
-                String response = "Received: " + query;
-                exchange.sendResponseHeaders(200, response.length());
-                exchange.getResponseBody().write(response.getBytes());
-                exchange.getResponseBody().close();
+    void openmap(MouseEvent event) {
+        mapviewer mapViewer = new mapviewer(this);
+        location_sql sql = new location_sql();
+        locations = sql.getLocations();
+        locations.sort(new Comparator<LocationInfo>() {
+            @Override
+            public int compare(LocationInfo l1, LocationInfo l2) {
+                int latCompare = Double.compare(l1.getLatitude(), l2.getLatitude());
+                if (latCompare != 0) return latCompare;
+                return Double.compare(l1.getLongitude(), l2.getLongitude());
             }
-        }
+        });
+        mapViewer.setExistingLocations(locations);
+        mapViewer.show();
     }
+
+    @FXML
+    void allocate_rent(MouseEvent event) {
+        System.out.println(selectedLat + " " + selectedLon);
+        location_sql loc = new location_sql();
+        loc.insert_location(selectedLat,selectedLon,rent_amount.getText());
+        locations.add(new LocationInfo(selectedLat, selectedLon, rent_amount.getText()));
+    }
+
+    public void setLocation(double lat, double lon) {
+        this.selectedLat = lat;
+        this.selectedLon = lon;
+        this.massage.setText(String.format("%.6f, %.6f", lat, lon));
+        // Here you can add any additional logic you want to perform with the location
+        // For example, storing it in a database, calculating distances, etc.
+    }
+
+    public BorderPane getPage() {
+        return page;
+    }
+
 }
