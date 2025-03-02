@@ -14,7 +14,6 @@ import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class sign_up_controller implements Initializable {
@@ -24,7 +23,6 @@ public class sign_up_controller implements Initializable {
 
     @FXML
     private TextFlow password_strength_message;
-
 
     @FXML
     private ComboBox<String> sign_up_type;
@@ -42,13 +40,49 @@ public class sign_up_controller implements Initializable {
     private TextField take_user_name;
 
     @FXML
-    void sign_up(MouseEvent event) throws SQLException {
-        users_sql s = new users_sql();
-        String email = take_email_address.getText();
-        String password = take_password.getText();
-        String username = take_user_name.getText();
-        String user_type = sign_up_type.getValue();
-        s.insert_user(username,password,email,user_type);
+    private TextField take_otp;
+
+    String email,password,username,user_type,otp;
+
+    @FXML
+    void sign_up(MouseEvent event) {
+        if(take_otp.getText()!=null && otp.equals(take_otp.getText())) {
+            try{
+                users_sql user = new users_sql();
+                user.insert_user(username,password,email,user_type);
+                fxml_loader fxmlLoader = new fxml_loader(event);
+                fxmlLoader.load_fxml("log_in.fxml");
+            }
+            catch(Exception e){
+                System.out.println("Try again");
+            }
+        }
+        else{
+            System.out.println("Wrong OTP");
+        }
+    }
+
+    @FXML
+    void send_otp(MouseEvent event) {
+        email = take_email_address.getText();
+        password = take_password.getText();
+        username = take_user_name.getText();
+        user_type = sign_up_type.getValue();
+        if(valid_password(take_password.getText()) && take_password.getText().equals(take_password_again.getText()) && valid(email) && !username.isEmpty() && !user_type.isEmpty())
+        {
+            otp = secure_otp_generator.generateOTP();
+            send_email send = new send_email();
+            send.sendEmail(take_email_address.getText(),otp);
+        }
+        else
+        {
+            System.out.println("Fill up");
+            System.out.println(email);
+            System.out.println(password);
+            System.out.println(take_password_again.getText());
+            System.out.println(username);
+            System.out.println(user_type);
+        }
     }
 
     @FXML
@@ -127,4 +161,9 @@ public class sign_up_controller implements Initializable {
     boolean valid_password(String password){
         return password.length()>=8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*[!@#$%^&*].*") && password.matches(".*[0-9].*");
     }
+
+    boolean valid(String email){
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
+
 }
