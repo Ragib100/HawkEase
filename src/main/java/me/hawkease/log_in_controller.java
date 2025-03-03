@@ -41,6 +41,8 @@ public class log_in_controller implements Initializable {
         users_sql st = new users_sql();
         boolean flag = st.check_user(email,password,type);
         if(flag) {
+            current_user.get_user().clear_email();
+            current_user.get_user().set_email(email);
             fxml_loader fxmlLoader = new fxml_loader(event);
             switch (type) {
                 case "Admin" -> {
@@ -65,7 +67,9 @@ public class log_in_controller implements Initializable {
                     }
                 }
             }
-
+        }
+        else{
+            System.out.println("Try again");
         }
     }
 

@@ -1,11 +1,11 @@
 package me.hawkease;
 
-public class LocationInfo {
+public class location_info {
     private double latitude;
     private double longitude;
     private String rentPrice;
 
-    public LocationInfo(double latitude, double longitude, String rentPrice) {
+    public location_info(double latitude, double longitude, String rentPrice) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.rentPrice = rentPrice;

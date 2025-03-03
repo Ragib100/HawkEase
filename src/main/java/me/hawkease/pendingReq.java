@@ -4,131 +4,126 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
-public class pendingReq {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class pendingReq implements Initializable {
 
     @FXML
-    void doUpdate(MouseEvent event) {
-
-    }
+    private TableColumn<EmailRequest, String> nameColumn;
 
     @FXML
-    private TableColumn<NameStatus, String> nameColumn;
+    private TableColumn<EmailRequest, String> statusColumn;
 
     @FXML
-    private Pagination pagination;
+    private TableView<EmailRequest> tableView;
 
-    @FXML
-    private TableColumn<NameStatus, ToggleGroup> statusColumn;
+    // Observable list to hold email requests
+    private final ObservableList<EmailRequest> pendingRequests = FXCollections.observableArrayList();
 
-    @FXML
-    private Button actionButton;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Configure name column to display email
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-    @FXML
-    private TableView<NameStatus> tableView;
+        // Configure status column to display buttons
+        statusColumn.setCellFactory(column -> new TableCell<>() {
+            private final Button acceptButton = new Button("Accept");
+            private final Button rejectButton = new Button("Reject");
+            private final HBox buttonContainer = new HBox(10); // 10 is the spacing between buttons
 
-    private static final int rows = 20;
-    private final ObservableList<NameStatus> data = FXCollections.observableArrayList();
+            {
+                // Style the buttons
+                acceptButton.getStyleClass().add("accept-button");
+                acceptButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
 
-    @FXML
-    public void initialize() {
-        // Initialize the table columns
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+                rejectButton.getStyleClass().add("reject-button");
+                rejectButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
 
-        // Set a custom cell factory for the status column
-        statusColumn.setCellFactory(column -> new TableCell<NameStatus, ToggleGroup>() {
+                // Set button actions
+                acceptButton.setOnAction(event -> handleAccept(getIndex()));
+                rejectButton.setOnAction(event -> handleReject(getIndex()));
+
+                // Configure container
+                buttonContainer.setAlignment(Pos.CENTER);
+                buttonContainer.getChildren().addAll(acceptButton, rejectButton);
+            }
+
             @Override
-            protected void updateItem(ToggleGroup toggleGroup, boolean empty) {
-                super.updateItem(toggleGroup, empty);
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
 
-                if (empty) {
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
                 } else {
-                    // Create radio buttons for "Accepted" and "Rejected"
-                    RadioButton acceptedButton = new RadioButton("Accepted");
-                    RadioButton rejectedButton = new RadioButton("Rejected");
-
-                    // Group the radio buttons
-                    ToggleGroup group = new ToggleGroup();
-                    acceptedButton.setToggleGroup(group);
-                    rejectedButton.setToggleGroup(group);
-
-                    // Bind the selected status to the NameStatus object
-                    NameStatus currentItem = getTableView().getItems().get(getIndex());
-                    group.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-                        if (newValue == acceptedButton) {
-                            currentItem.setStatus("Accepted");
-                        } else if (newValue == rejectedButton) {
-                            currentItem.setStatus("Rejected");
-                        }
-                    });
-
-                    // Set the initial state based on the current status
-                    if ("Accepted".equals(currentItem.getStatus())) {
-                        acceptedButton.setSelected(true);
-                    } else if ("Rejected".equals(currentItem.getStatus())) {
-                        rejectedButton.setSelected(true);
-                    }
-
-                    // Add the radio buttons to an HBox
-                    HBox hBox = new HBox(10, acceptedButton, rejectedButton);
-                    setGraphic(hBox);
+                    setGraphic(buttonContainer);
                 }
             }
         });
 
-        // Populate the table with sample data
-        loadData();
+        // Load sample data
+        loadSampleData();
 
-        // Set the data to the table
-        tableView.setItems(data);
-
-        // Handle the submit button action
-        actionButton.setOnAction(event -> handleSubmit());
+        // Set the items to the TableView
+        tableView.setItems(pendingRequests);
     }
 
-    private void loadData() {
-        // Add sample data to the ObservableList
-        for (int i = 1; i <= 50; i++) {
-            data.add(new NameStatus("User " + i, ""));
-        }
-    }
+    // Handle accept button click
+    private void handleAccept(int index) {
+        if (index >= 0 && index < pendingRequests.size()) {
+            EmailRequest request = pendingRequests.get(index);
+            String email = request.getEmail();
+            System.out.println("Accepted request from: " + email);
+            requests_sql sql = new requests_sql();
 
-    private void handleSubmit() {
-        // Print the status of each user
-        for (NameStatus item : data) {
-            System.out.println("User: " + item.getUserName() + ", Status: " + item.getStatus());
+            pendingRequests.remove(index);
         }
     }
 
-    // Inner class to represent the data model
-    public static class NameStatus {
-        private final SimpleStringProperty userName;
-        private String status;
+    // Handle reject button click
+    private void handleReject(int index) {
+        if (index >= 0 && index < pendingRequests.size()) {
+            EmailRequest request = pendingRequests.get(index);
+            System.out.println("Rejected request from: " + request.getEmail());
 
-        public NameStatus(String userName, String status) {
-            this.userName = new SimpleStringProperty(userName);
-            this.status = status;
+            // Here you would typically call your service to process the rejection
+            // For example: userService.rejectRequest(request.getEmail());
+
+            // Remove the request from the table
+            pendingRequests.remove(index);
+        }
+    }
+
+    // Load sample data for testing
+    private void loadSampleData() {
+        pendingRequests.add(new EmailRequest("john.doe@example.com"));
+        pendingRequests.add(new EmailRequest("jane.smith@example.com"));
+        pendingRequests.add(new EmailRequest("michael.johnson@example.com"));
+        pendingRequests.add(new EmailRequest("sarah.williams@example.com"));
+        pendingRequests.add(new EmailRequest("robert.brown@example.com"));
+    }
+
+    // Model class for email requests
+    public static class EmailRequest {
+        private final SimpleStringProperty email;
+
+        public EmailRequest(String email) {
+            this.email = new SimpleStringProperty(email);
         }
 
-        public String getUserName() {
-            return userName.get();
+        public String getEmail() {
+            return email.get();
         }
 
-        public void setUserName(String userName) {
-            this.userName.set(userName);
+        public void setEmail(String email) {
+            this.email.set(email);
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
     }
 }

@@ -19,10 +19,7 @@ public class location_sql {
     }
 
     public void insert_location(double lat, double lon,String rent_amount) {
-        if(lat==-180 || lon==-180){
-            System.out.println("Please enter a valid lat/lon");
-            return;
-        }
+
         String query = "INSERT INTO allocated_locations(latitude,longitude,rent) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = con.prepareStatement(query)) {
@@ -42,8 +39,65 @@ public class location_sql {
         }
     }
 
-    public ArrayList<LocationInfo> getLocations() {
-        ArrayList<LocationInfo> locations = new ArrayList<>();
+    public void update_location(double lat, double lon,String rent_amount) {
+        String query = "UPDATE allocated_locations SET rent = ? WHERE latitude = ? AND longitude = ?";
+
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, String.valueOf(rent_amount));
+            stmt.setString(2, String.valueOf(lat));
+            stmt.setString(3, String.valueOf(lon));
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Location updated successfully!");
+            }
+            else {
+                System.out.println("Location update failed.");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Failed to update user.");
+        }
+    }
+
+    public boolean check_location(double lat, double lon) {
+
+        String query = "SELECT * FROM allocated_locations WHERE latitude = ? AND longitude = ?";
+//        String query = "SELECT * FROM users WHERE email = ? AND password = ? AND type = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, String.valueOf(lat));
+            stmt.setString(2, String.valueOf(lon));
+
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) return true;
+        }
+        catch (SQLException e) {
+            System.out.println("Checking location failed.");
+        }
+        return false;
+    }
+
+    public void delete_location(double lat, double lon) {
+        String query = "DELETE FROM allocated_locations WHERE latitude = ? AND longitude = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1,String.valueOf(lat));
+            stmt.setString(2,String.valueOf(lon));
+
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Location deleted successfully!");
+            }
+            else {
+                System.out.println("Location deletion failed.");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Location not found.");
+        }
+    }
+
+    public ArrayList<location_info> getLocations() {
+        ArrayList<location_info> locations = new ArrayList<>();
 
         String query = "SELECT latitude, longitude, rent FROM allocated_locations";
 
@@ -56,7 +110,7 @@ public class location_sql {
                 double longitude = rs.getDouble("longitude");
                 String rentPrice = rs.getString("rent");
 
-                locations.add(new LocationInfo(latitude, longitude, rentPrice));
+                locations.add(new location_info(latitude, longitude, rentPrice));
             }
 
         } catch (SQLException e) {
@@ -65,5 +119,6 @@ public class location_sql {
 
         return locations;
     }
+
 
 }

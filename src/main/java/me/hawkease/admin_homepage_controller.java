@@ -13,7 +13,7 @@ public class admin_homepage_controller {
     private StackPane page;
 
     @FXML
-    void allocate_stall_and_rent(MouseEvent event){
+    void stalls(MouseEvent event){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("allocatestallrent.fxml"));
             page.getChildren().clear();
@@ -28,18 +28,6 @@ public class admin_homepage_controller {
     void pending_req(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pendingreq.fxml"));
-            page.getChildren().clear();
-            page.getChildren().add(fxmlLoader.load());
-        }
-        catch (IOException e){
-            System.out.println("Error in loading fxml");
-        }
-    }
-
-    @FXML
-    void rent_prices(MouseEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rent_prices.fxml"));
             page.getChildren().clear();
             page.getChildren().add(fxmlLoader.load());
         }

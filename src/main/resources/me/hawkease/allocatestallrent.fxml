@@ -6,11 +6,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.allocatestallrent">
    <children>
-      <Button layoutX="62.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#openmap" prefHeight="26.0" prefWidth="115.0" text="Open Map" />
+      <Button layoutX="62.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="26.0" prefWidth="115.0" text="Open Map" />
       <Label layoutX="86.0" layoutY="302.0" prefHeight="26.0" prefWidth="127.0" text="    Selected   Location:" />
       <TextField fx:id="rent_amount" layoutX="86.0" layoutY="349.0" prefHeight="26.0" prefWidth="154.0" promptText="   Enter   rent   amount  :" />
       <Button layoutX="281.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#allocate_rent" prefHeight="26.0" prefWidth="105.0" text="Allocate rent" />
       <Text fx:id="massage" layoutX="213.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected location" wrappingWidth="386.4000488281249" />
       <BorderPane fx:id="page" layoutX="232.0" layoutY="3.0" prefHeight="296.0" prefWidth="320.0" />
+      <Button layoutX="334.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#delete_stall" prefHeight="26.0" prefWidth="105.0" text="Delete stall" />
    </children>
 </AnchorPane>
