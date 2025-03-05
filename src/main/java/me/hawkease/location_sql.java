@@ -7,14 +7,10 @@ public class location_sql {
     private Connection con;
 
     public location_sql() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ragib", "root", "asdf1234");
-            con = DriverManager.getConnection("jdbc:mysql://ragib.mysql.database.azure.com:3306/root", "Ragib100", "Asdf@1234");
-            System.out.println("Connected to database.");
-        } catch (ClassNotFoundException | SQLException e) {
+        try{
+            con = database_connection.get_connection().sql_connection();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Database connection failed.");
         }
     }
 

@@ -6,31 +6,40 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class pendingReq implements Initializable {
 
-    @FXML
-    private TableColumn<EmailRequest, String> nameColumn;
+    ArrayList<location_requests> emailLocations;
 
     @FXML
-    private TableColumn<EmailRequest, String> statusColumn;
+    private TableColumn<location_requests, String> nameColumn;
 
     @FXML
-    private TableView<EmailRequest> tableView;
+    private TableColumn<location_requests, String> statusColumn;
+
+    @FXML
+    private TableView<location_requests> tableView;
 
     // Observable list to hold email requests
-    private final ObservableList<EmailRequest> pendingRequests = FXCollections.observableArrayList();
+    private final ObservableList<location_requests> pendingRequests = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Configure name column to display email
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        nameColumn.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().email())
+        );
 
         // Configure status column to display buttons
         statusColumn.setCellFactory(column -> new TableCell<>() {
@@ -46,7 +55,7 @@ public class pendingReq implements Initializable {
                 rejectButton.getStyleClass().add("reject-button");
                 rejectButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
 
-                // Set button actions
+                // on button actions
                 acceptButton.setOnAction(event -> handleAccept(getIndex()));
                 rejectButton.setOnAction(event -> handleReject(getIndex()));
 
@@ -74,14 +83,26 @@ public class pendingReq implements Initializable {
         tableView.setItems(pendingRequests);
     }
 
+    // Load sample data for testing
+    private void loadSampleData() {
+        requests_sql sql = new requests_sql();
+        emailLocations = sql.get_requests();
+        Collections.sort(emailLocations);
+        pendingRequests.addAll(emailLocations);
+    }
+
     // Handle accept button click
     private void handleAccept(int index) {
         if (index >= 0 && index < pendingRequests.size()) {
-            EmailRequest request = pendingRequests.get(index);
-            String email = request.getEmail();
-            System.out.println("Accepted request from: " + email);
-            requests_sql sql = new requests_sql();
-
+            location_requests request = pendingRequests.get(index);
+            System.out.println("Accepted request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
+            shop_keepers_sql temp = new shop_keepers_sql();
+            if(!temp.insert(request.email(), request.lat(), request.lon())) return;
+            location_requests cur_loc = emailLocations.get(index);
+            int lb = lower_bound(new co_ordinate(cur_loc.lat(), cur_loc.lon()));
+            int ub = upper_bound(new co_ordinate(cur_loc.lat(), cur_loc.lon()));
+            for(int i=lb; i<=ub; i++) handleReject(i);
+            emailLocations.subList(lb, ub).clear();
             pendingRequests.remove(index);
         }
     }
@@ -89,41 +110,45 @@ public class pendingReq implements Initializable {
     // Handle reject button click
     private void handleReject(int index) {
         if (index >= 0 && index < pendingRequests.size()) {
-            EmailRequest request = pendingRequests.get(index);
-            System.out.println("Rejected request from: " + request.getEmail());
+            location_requests request = pendingRequests.get(index);
+            System.out.println("Rejected request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
 
-            // Here you would typically call your service to process the rejection
-            // For example: userService.rejectRequest(request.getEmail());
+            requests_sql sql = new requests_sql();
+            sql.delete_request(request.email());
 
-            // Remove the request from the table
             pendingRequests.remove(index);
         }
     }
 
-    // Load sample data for testing
-    private void loadSampleData() {
-        pendingRequests.add(new EmailRequest("john.doe@example.com"));
-        pendingRequests.add(new EmailRequest("jane.smith@example.com"));
-        pendingRequests.add(new EmailRequest("michael.johnson@example.com"));
-        pendingRequests.add(new EmailRequest("sarah.williams@example.com"));
-        pendingRequests.add(new EmailRequest("robert.brown@example.com"));
+    int lower_bound(co_ordinate flag) {
+        int l=0,h=emailLocations.size()-1,res=-1;
+        while(l<=h) {
+            int mid = l+(h-l>>1);
+            location_requests cur_loc = emailLocations.get(mid);
+            co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
+            if(cur.is_less_than(flag)) l=mid+1;
+            else if(cur.is_equal(flag)){
+                res=mid;
+                h=mid-1;
+            }
+            else h=mid-1;
+        }
+        return res;
     }
 
-    // Model class for email requests
-    public static class EmailRequest {
-        private final SimpleStringProperty email;
-
-        public EmailRequest(String email) {
-            this.email = new SimpleStringProperty(email);
+    int upper_bound(co_ordinate flag) {
+        int l=0,h=emailLocations.size()-1,res=-1;
+        while(l<=h) {
+            int mid = l+(h-l>>1);
+            location_requests cur_loc = emailLocations.get(mid);
+            co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
+            if(cur.is_less_than(flag)) l=mid+1;
+            else if(cur.is_equal(flag)){
+                res=mid;
+                l=mid+1;
+            }
+            else h=mid-1;
         }
-
-        public String getEmail() {
-            return email.get();
-        }
-
-        public void setEmail(String email) {
-            this.email.set(email);
-        }
-
+        return res;
     }
 }

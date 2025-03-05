@@ -1,19 +1,17 @@
 package me.hawkease;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class requests_sql {
 
     private Connection con;
 
     public requests_sql() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://ragib.mysql.database.azure.com:3306/root", "Ragib100", "Asdf@1234");
-            System.out.println("Connected to database.");
-        } catch (ClassNotFoundException | SQLException e) {
+        try{
+            con = database_connection.get_connection().sql_connection();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Database connection failed.");
         }
     }
 
@@ -39,6 +37,37 @@ public class requests_sql {
         }
         catch(SQLException e){
             System.out.println("Error in request_location");
+        }
+    }
+
+    public ArrayList<location_requests> get_requests() {
+        ArrayList<location_requests> requests = new ArrayList<>();
+        String query = "SELECT email, latitude, longitude FROM requests";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                String email = rs.getString("email");
+                double lat = rs.getDouble("latitude");
+                double lon = rs.getDouble("longitude");
+                requests.add(new location_requests(email, lat, lon));
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Error in getting request_location");
+        }
+        return requests;
+    }
+
+    public void delete_request(String email){
+        String query = "DELETE FROM requests WHERE email = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, email);
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) System.out.println("request deleted successfully!");
+            else System.out.println("request deletion failed.");
+        }
+        catch(SQLException e){
+            System.out.println("Error in delete_request");
         }
     }
 
