@@ -16,9 +16,9 @@
          </top>
          <left>
              <VBox prefHeight="229.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                 <Button mnemonicParsing="false" onMouseClicked="#stalls" prefHeight="75.0" prefWidth="100.0" text="Stalls" />
-                 <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="75.0" prefWidth="100.0" text="Pending Requests" />
-                 <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="75.0" prefWidth="100.0" text="Reports &amp; Analytics" />
+                 <Button mnemonicParsing="false" onMouseClicked="#stalls" prefHeight="50.0" prefWidth="100.0" text="Stalls" />
+                 <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="50.0" prefWidth="100.0" text="Pending Requests" />
+                 <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="50.0" prefWidth="100.0" text="Reports &amp; Analytics" />
              </VBox>
          </left>
          <center>

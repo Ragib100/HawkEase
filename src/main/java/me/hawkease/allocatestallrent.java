@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 
 public class allocatestallrent implements map_controller {
 
@@ -22,31 +22,24 @@ public class allocatestallrent implements map_controller {
 
     private double selectedLat = -180;
     private double selectedLon = -180;
-    private ArrayList<location_info> locations = new ArrayList<>();
+    HashMap<location_info, Boolean>loc;
 
     @FXML
     void open_map(MouseEvent event) {
         try {
+            loc = new HashMap<>();
             mapviewer mapViewer = new mapviewer(this);
             location_sql sql = new location_sql();
-            locations = sql.getLocations();
-
-            if (locations != null) {
-                locations.sort(new Comparator<location_info>() {
-                    @Override
-                    public int compare(location_info l1, location_info l2) {
-                        if (l1 == null && l2 == null) return 0;
-                        if (l1 == null) return -1;
-                        if (l2 == null) return 1;
-
-                        int latCompare = Double.compare(l1.getLatitude(), l2.getLatitude());
-                        if (latCompare != 0) return latCompare;
-                        return Double.compare(l1.getLongitude(), l2.getLongitude());
-                    }
-                });
+            ArrayList<location_info> locations = sql.getLocations();
+            for (location_info Location : locations) {
+                loc.put(new location_info(Location.getLatitude(), Location.getLongitude()),true);
             }
-
-            mapViewer.setExistingLocations(locations);
+            shop_keepers_sql sql1 = new shop_keepers_sql();
+            locations = sql1.getLocations();
+            for (location_info location : locations) {
+                loc.put(new location_info(location.getLatitude(), location.getLongitude()),Boolean.FALSE);
+            }
+            mapViewer.setExistingLocations(loc);
             mapViewer.show();
         } catch (Exception e) {
             System.err.println("Error opening map: " + e.getMessage());
@@ -56,6 +49,14 @@ public class allocatestallrent implements map_controller {
     @FXML
     void delete_stall(MouseEvent event) {
         try{
+            location_info checkLocation = new location_info(selectedLat, selectedLon);
+            if (!loc.containsKey(checkLocation) || loc.get(checkLocation) == null || !loc.get(checkLocation)) {
+                System.out.println("Can not be deleted");
+                return;
+            }
+            else {
+                System.out.println("done");
+            }
             location_sql sql = new location_sql();
             sql.delete_location(selectedLat, selectedLon);
 //            System.out.println("Deleted location: " + selectedLat + ", " + selectedLon);
@@ -109,4 +110,5 @@ public class allocatestallrent implements map_controller {
     public BorderPane getPage() {
         return page;
     }
+
 }

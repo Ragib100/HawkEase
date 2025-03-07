@@ -15,69 +15,56 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
 
 public class mapviewer {
-    // The main map component from JXMapViewer
     private JXMapViewer mapViewer;
-    // Current zoom level (1-15)
     private int currentZoom = 5;
-    // Stores previous mouse position for drag operations
     private Point previousPoint;
-    // Currently selected new waypoint (blue marker)
     private DefaultWaypoint currentWaypoint;
-    // Collection of all waypoints to display
     private final Set<Waypoint> waypoints = new HashSet<>();
-    // Painter for rendering waypoints and zones
+    private final Map<Waypoint, location_info> waypointToLocationMap = new HashMap<>();
     private WaypointPainter<Waypoint> waypointPainter;
-    // Root JavaFX container for the map
     private BorderPane mapRoot;
-    // Controller to communicate with parent application
     private final map_controller controller;
-    // List of pre-existing locations to display
-    private ArrayList<location_info> existingLocations;
-    // Radius of each location zone in meters
+    private HashMap<location_info, Boolean> existingLocations;
     private static final double ZONE_RADIUS_METERS = 100;
-    // Currently highlighted location (green marker)
     private location_info highlightedLocation;
 
-    /**
-     * Creates a new MapViewer connected to the provided controller
-     *
-     * @param controller The interface to communicate with the parent application
-     */
     public mapviewer(map_controller controller) {
         this.controller = controller;
         initializeMap();
     }
 
-    /**
-     * Sets the list of existing locations to display on the map
-     *
-     * @param locations ArrayList of location_info objects to display
-     */
-    public void setExistingLocations(ArrayList<location_info> locations) {
-        this.existingLocations = locations;
+    public void setExistingLocations(HashMap<location_info, Boolean> existingLocations) {
+        this.existingLocations = existingLocations;
+        for(location_info info : existingLocations.keySet()) {
+            System.out.println(info.getLatitude() + " " + info.getLongitude() + " " + existingLocations.get(info));
+        }
         updateExistingLocations();
     }
 
-    /**
-     * Updates the waypoints collection based on existing locations
-     * Called when the locations list changes
-     */
     private void updateExistingLocations() {
         // Use SwingUtilities.invokeLater to ensure thread safety with Swing components
         SwingUtilities.invokeLater(() -> {
             waypoints.clear();
+            waypointToLocationMap.clear();
+
             if (existingLocations != null) {
-                for (location_info loc : existingLocations) {
+                for (Map.Entry<location_info, Boolean> entry : existingLocations.entrySet()) {
+                    location_info loc = entry.getKey();
                     if (loc != null) {
-                        // Convert each location to a waypoint
-                        waypoints.add(new DefaultWaypoint(
+                        // Create waypoint for each location
+                        DefaultWaypoint waypoint = new DefaultWaypoint(
                                 new GeoPosition(loc.getLatitude(), loc.getLongitude())
-                        ));
+                        );
+                        waypoints.add(waypoint);
+
+                        // Store the mapping between waypoint and location_info
+                        waypointToLocationMap.put(waypoint, loc);
                     }
                 }
             }
@@ -85,18 +72,12 @@ public class mapviewer {
         });
     }
 
-    /**
-     * Shows the map in the controller's page
-     */
     public void show() {
         if (controller != null && controller.getPage() != null) {
             controller.getPage().setCenter(mapRoot);
         }
     }
 
-    /**
-     * Initializes the map UI components
-     */
     private void initializeMap() {
         // Create the main layout
         mapRoot = new BorderPane();
@@ -131,15 +112,9 @@ public class mapviewer {
         mapRoot.setCenter(swingNode);
     }
 
-    /**
-     * Checks if a position is within the zone radius of any existing location
-     *
-     * @param position The GeoPosition to check
-     * @return The location_info object if found within zone, null otherwise
-     */
     private location_info findLocationInZone(GeoPosition position) {
         if (existingLocations != null) {
-            for (location_info loc : existingLocations) {
+            for (location_info loc : existingLocations.keySet()) {
                 if (loc != null && calculateDistance(
                         position.getLatitude(), position.getLongitude(),
                         loc.getLatitude(), loc.getLongitude()) <= ZONE_RADIUS_METERS) {
@@ -150,15 +125,6 @@ public class mapviewer {
         return null;
     }
 
-    /**
-     * Calculates the distance between two geographic points using the Haversine formula
-     *
-     * @param lat1 Latitude of first point
-     * @param lon1 Longitude of first point
-     * @param lat2 Latitude of second point
-     * @param lon2 Longitude of second point
-     * @return Distance between points in meters
-     */
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371000; // Earth's radius in meters
         double latDistance = Math.toRadians(lat2 - lat1);
@@ -170,11 +136,6 @@ public class mapviewer {
         return R * c;
     }
 
-    /**
-     * Creates and configures the Swing map component and embeds it in JavaFX
-     *
-     * @param swingNode The SwingNode to contain the map
-     */
     private void createAndSetSwingContent(final SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> {
             // Create and configure the map viewer
@@ -206,7 +167,8 @@ public class mapviewer {
 
                     // Draw zones first (so they appear under the waypoints)
                     if (existingLocations != null) {
-                        for (location_info loc : existingLocations) {
+                        for (Map.Entry<location_info, Boolean> entry : existingLocations.entrySet()) {
+                            location_info loc = entry.getKey();
                             if (loc == null) continue;
 
                             // Convert geo coordinates to pixel position
@@ -226,7 +188,7 @@ public class mapviewer {
                                     loc.getLongitude() == highlightedLocation.getLongitude()) {
                                 g.setColor(Color.GREEN); // Solid green for highlighted
                             } else {
-                                g.setColor(Color.YELLOW); // Solid yellow for regular
+                                g.setColor(Color.YELLOW); // Always yellow for zones
                             }
 
                             // Draw the filled zone
@@ -253,22 +215,25 @@ public class mapviewer {
                         Point2D pt = map.getTileFactory().geoToPixel(
                                 w.getPosition(), map.getZoom());
 
-                        // Check if this waypoint represents a highlighted location
-                        boolean isHighlighted = false;
-                        if (highlightedLocation != null) {
-                            GeoPosition pos = w.getPosition();
-                            // Use small epsilon for floating point comparison
-                            if (Math.abs(pos.getLatitude() - highlightedLocation.getLatitude()) < 0.0000001 &&
-                                    Math.abs(pos.getLongitude() - highlightedLocation.getLongitude()) < 0.0000001) {
-                                isHighlighted = true;
-                            }
+                        // Default to blue for the currentWaypoint (new selection)
+                        if (w == currentWaypoint) {
+                            g.setColor(Color.BLUE);
                         }
-
-                        // Set color based on status
-                        if (isHighlighted) {
-                            g.setColor(Color.GREEN); // Green for highlighted location
-                        } else {
-                            g.setColor(Color.RED); // Red for regular locations
+                        // Check if this waypoint represents a highlighted location
+                        else if (highlightedLocation != null &&
+                                isMatchingPosition(w.getPosition(), highlightedLocation.getLatitude(), highlightedLocation.getLongitude())) {
+                            g.setColor(Color.GREEN);
+                        }
+                        // Use the mapping to determine the color directly from existingLocations
+                        else if (waypointToLocationMap.containsKey(w)) {
+                            location_info loc = waypointToLocationMap.get(w);
+                            Boolean colorFlag = existingLocations.get(loc);
+                            // If true, use RED, otherwise use YELLOW
+                            g.setColor(Boolean.TRUE.equals(colorFlag) ? Color.RED : Color.YELLOW);
+                        }
+                        // Default to red for any unmapped waypoints
+                        else {
+                            g.setColor(Color.RED);
                         }
 
                         // Draw the waypoint marker
@@ -281,29 +246,21 @@ public class mapviewer {
                         g.drawOval(x, y, size, size);
                     }
 
-                    // Draw current selection (new waypoint) with blue
-                    if (currentWaypoint != null) {
-                        Point2D pt = map.getTileFactory().geoToPixel(
-                                currentWaypoint.getPosition(), map.getZoom());
-                        g.setColor(Color.BLUE);
-                        int x = (int) pt.getX() - size / 2;
-                        int y = (int) pt.getY() - size / 2;
-                        g.fillOval(x, y, size, size);
-                        g.setColor(Color.BLACK);
-                        g.drawOval(x, y, size, size);
-                    }
-
                     // Clean up the graphics context
                     g.dispose();
                 }
+
+                /**
+                 * Helper method to check if a position matches given coordinates
+                 */
+                private boolean isMatchingPosition(GeoPosition pos, double lat, double lon) {
+                    return Math.abs(pos.getLatitude() - lat) < 0.0000001 &&
+                            Math.abs(pos.getLongitude() - lon) < 0.0000001;
+                }
             };
 
-            // Set the painter as the overlay painter for the map
             mapViewer.setOverlayPainter(waypointPainter);
 
-            // Add mouse listeners for interaction
-
-            // Mouse press tracking for drag operations
             mapViewer.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -312,44 +269,34 @@ public class mapviewer {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Handle double-click to select location
                     if (e.getClickCount() == 2) {
-                        // Convert screen position to geographic coordinates
                         GeoPosition clicked = mapViewer.convertPointToGeoPosition(e.getPoint());
-                        // Check if click is within an existing location's zone
                         location_info locationInZone = findLocationInZone(clicked);
 
                         if (locationInZone != null) {
-                            // If clicked within a zone, highlight that location
                             highlightedLocation = locationInZone;
-                            currentWaypoint = null; // Clear any current waypoint
+                            currentWaypoint = null;
                         } else {
-                            // If clicked outside any zone, set a new waypoint and clear highlight
                             highlightedLocation = null;
                             setWaypoint(clicked);
                         }
 
-                        // Refresh the display
                         updateWaypoints();
                     }
                 }
             });
 
-            // Map panning by dragging
             mapViewer.addMouseMotionListener(new MouseMotionAdapter() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
                     if (previousPoint != null) {
-                        // Calculate the movement amount
                         Point currentPoint = e.getPoint();
                         GeoPosition oldPos = mapViewer.convertPointToGeoPosition(previousPoint);
                         GeoPosition newPos = mapViewer.convertPointToGeoPosition(currentPoint);
 
-                        // Calculate change in position
                         double lonChange = oldPos.getLongitude() - newPos.getLongitude();
                         double latChange = oldPos.getLatitude() - newPos.getLatitude();
 
-                        // Move the map by the calculated amount
                         GeoPosition center = mapViewer.getCenterPosition();
                         GeoPosition newCenter = new GeoPosition(
                                 center.getLatitude() + latChange,
@@ -362,55 +309,42 @@ public class mapviewer {
                 }
             });
 
-            // Zoom in/out with mouse wheel
             mapViewer.addMouseWheelListener(e -> {
                 if (e.getWheelRotation() < 0) {
-                    // Zoom in (decrease zoom level number)
                     currentZoom = Math.max(1, currentZoom - 1);
                 } else {
-                    // Zoom out (increase zoom level number)
                     currentZoom = Math.min(15, currentZoom + 1);
                 }
                 mapViewer.setZoom(currentZoom);
             });
 
-            // Set the map as the content of the SwingNode
             swingNode.setContent(mapViewer);
         });
     }
 
-    /**
-     * Sets a new waypoint at the specified position
-     *
-     * @param position The geographic position for the new waypoint
-     */
     private void setWaypoint(GeoPosition position) {
-        // Create new waypoint at position
         currentWaypoint = new DefaultWaypoint(position);
-
-        // Reset waypoints collection
         waypoints.clear();
+        waypointToLocationMap.clear();
+
         waypoints.add(currentWaypoint);
 
-        // Re-add existing locations as waypoints
         if (existingLocations != null) {
-            for (location_info loc : existingLocations) {
+            for (Map.Entry<location_info, Boolean> entry : existingLocations.entrySet()) {
+                location_info loc = entry.getKey();
                 if (loc != null) {
-                    waypoints.add(new DefaultWaypoint(
+                    DefaultWaypoint wp = new DefaultWaypoint(
                             new GeoPosition(loc.getLatitude(), loc.getLongitude())
-                    ));
+                    );
+                    waypoints.add(wp);
+                    waypointToLocationMap.put(wp, loc);
                 }
             }
         }
 
-        // Update the display
         updateWaypoints();
     }
 
-    /**
-     * Updates the waypoint display on the map
-     * Called whenever waypoints change
-     */
     private void updateWaypoints() {
         SwingUtilities.invokeLater(() -> {
             waypointPainter.setWaypoints(waypoints);

@@ -43,4 +43,15 @@ public class forgot_password_controller {
         }
     }
 
+    @FXML
+    void log_in(MouseEvent event) {
+        try{
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("log_in.fxml");;
+        }
+        catch(Exception e){
+            System.out.println("Login failed");
+        }
+    }
+
 }

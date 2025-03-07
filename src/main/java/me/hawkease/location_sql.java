@@ -95,7 +95,7 @@ public class location_sql {
     public ArrayList<location_info> getLocations() {
         ArrayList<location_info> locations = new ArrayList<>();
 
-        String query = "SELECT latitude, longitude, rent FROM allocated_locations";
+        String query = "SELECT latitude, longitude FROM allocated_locations";
 
         try (PreparedStatement stmt = con.prepareStatement(query)) {
 
@@ -104,9 +104,8 @@ public class location_sql {
             while (rs.next()) {
                 double latitude = rs.getDouble("latitude");
                 double longitude = rs.getDouble("longitude");
-                String rentPrice = rs.getString("rent");
 
-                locations.add(new location_info(latitude, longitude, rentPrice));
+                locations.add(new location_info(latitude, longitude));
             }
 
         } catch (SQLException e) {

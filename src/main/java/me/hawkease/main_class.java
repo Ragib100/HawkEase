@@ -5,23 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class main_class extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ragib", "root", "asdf1234");
-            Connection con = DriverManager.getConnection(System.getenv("cloud_sql_host"), System.getenv("cloud_sql_user"), System.getenv("cloud_sql_password"));
-            System.out.println("Connected to database.");
-            database_connection.get_connection().set_connection(con);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Database connection failed.");
-        }
         FXMLLoader fxmlLoader = new FXMLLoader(main_class.class.getResource("welcome_page.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("HawkEase!");

@@ -17,8 +17,14 @@ public class requests_sql {
 
     public void request_location(double lat, double lon){
         String email = current_user.get_user().get_email();
+        if(check(email, lat, lon)) return;
         if(email == null) {
             System.out.println("Email is null");
+            return;
+        }
+        shop_keepers_sql shop_keepers_sql = new shop_keepers_sql();
+        if(!shop_keepers_sql.is_under_3(email)){
+            System.out.println("Email is not under 3");
             return;
         }
         else System.out.println("Email: " + email);
@@ -58,10 +64,12 @@ public class requests_sql {
         return requests;
     }
 
-    public void delete_request(String email){
-        String query = "DELETE FROM requests WHERE email = ?";
+    public void delete_request(String email,double lat,double lon){
+        String query = "DELETE FROM requests WHERE email = ? AND latitude = ? AND longitude = ?";
         try(PreparedStatement stmt = con.prepareStatement(query)){
             stmt.setString(1, email);
+            stmt.setDouble(2, lat);
+            stmt.setDouble(3, lon);
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) System.out.println("request deleted successfully!");
             else System.out.println("request deletion failed.");
@@ -71,4 +79,18 @@ public class requests_sql {
         }
     }
 
+    public boolean check(String email, double lat, double lon){
+        String query = "SELECT email, latitude, longitude FROM requests WHERE email = ? AND latitude = ? AND longitude = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, email);
+            stmt.setDouble(2, lat);
+            stmt.setDouble(3, lon);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
+        catch(SQLException e){
+            System.out.println("Error in check");
+            return true;
+        }
+    }
 }

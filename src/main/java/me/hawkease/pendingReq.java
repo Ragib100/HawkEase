@@ -38,7 +38,7 @@ public class pendingReq implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // Configure name column to display email
         nameColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().email())
+                new SimpleStringProperty(cellData.getValue().email()+","+cellData.getValue().lat()+" "+cellData.getValue().lon())
         );
 
         // Configure status column to display buttons
@@ -99,11 +99,12 @@ public class pendingReq implements Initializable {
             shop_keepers_sql temp = new shop_keepers_sql();
             if(!temp.insert(request.email(), request.lat(), request.lon())) return;
             location_requests cur_loc = emailLocations.get(index);
-            int lb = lower_bound(new co_ordinate(cur_loc.lat(), cur_loc.lon()));
-            int ub = upper_bound(new co_ordinate(cur_loc.lat(), cur_loc.lon()));
-            for(int i=lb; i<=ub; i++) handleReject(i);
+            co_ordinate flag = new co_ordinate(cur_loc.lat(), cur_loc.lon());
+            int lb = lower_bound(flag);
+            int ub = upper_bound(flag);
+            System.out.println(lb + " " + ub);
+            for(int i=ub; i>=lb; i--) handleReject(i);
             emailLocations.subList(lb, ub).clear();
-            pendingRequests.remove(index);
         }
     }
 
@@ -114,7 +115,7 @@ public class pendingReq implements Initializable {
             System.out.println("Rejected request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
 
             requests_sql sql = new requests_sql();
-            sql.delete_request(request.email());
+            sql.delete_request(request.email(),request.lat(),request.lon());
 
             pendingRequests.remove(index);
         }
