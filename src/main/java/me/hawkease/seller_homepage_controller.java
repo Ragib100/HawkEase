@@ -50,16 +50,4 @@ public class seller_homepage_controller {
         }
     }
 
-    @FXML
-    void add_products(MouseEvent event) {
-        try{
-            page.getChildren().clear();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addproducts.fxml"));
-            page.getChildren().add(fxmlLoader.load());
-        }
-        catch (Exception e){
-            System.out.println("Error in loading fxml");
-        }
-    }
-
 }

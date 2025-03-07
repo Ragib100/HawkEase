@@ -2,7 +2,6 @@ package me.hawkease;
 
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -84,28 +83,10 @@ public class mapviewer {
         SwingNode swingNode = new SwingNode();
         createAndSetSwingContent(swingNode);
 
-        // Create the Apply button
-        Button submitButton = new Button("Apply");
-
-        // Create a container for controls
+        // Create a container for controls (keeping the structure but not adding any buttons)
         HBox controls = new HBox(10);
         controls.setPadding(new Insets(10));
-        controls.getChildren().add(submitButton);
         controls.setStyle("-fx-alignment: center;");
-
-        // Set up the button action
-        submitButton.setOnAction(e -> {
-            if (currentWaypoint != null) {
-                // Send new waypoint position to controller
-                GeoPosition pos = currentWaypoint.getPosition();
-                controller.setLocation(pos.getLatitude(), pos.getLongitude());
-                controller.getPage().setCenter(null);
-            } else if (highlightedLocation != null) {
-                // Send highlighted location to controller
-                controller.setLocation(highlightedLocation.getLatitude(), highlightedLocation.getLongitude());
-                controller.getPage().setCenter(null);
-            }
-        });
 
         // Arrange the components
         mapRoot.setTop(controls);
@@ -276,9 +257,15 @@ public class mapviewer {
                         if (locationInZone != null) {
                             highlightedLocation = locationInZone;
                             currentWaypoint = null;
+
+                            // Apply action on double-click
+                            controller.setLocation(locationInZone.getLatitude(), locationInZone.getLongitude());
                         } else {
                             highlightedLocation = null;
                             setWaypoint(clicked);
+
+                            // Apply action on double-click for new waypoint
+                            controller.setLocation(clicked.getLatitude(), clicked.getLongitude());
                         }
 
                         updateWaypoints();

@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane layoutY="-4.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
     <top>
-        <HBox alignment="BASELINE_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <VBox alignment="TOP_RIGHT" prefHeight="107.0" prefWidth="100.0">
-                <children>
-                    <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="103.0" text="My Profile" />
-                    <Button mnemonicParsing="false" onMouseClicked="#log_out" prefHeight="50.0" prefWidth="101.0" text="Logout" />
-                </children>
-            </VBox>
-        </HBox>
+        <BorderPane prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
+            <center>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Seller Panel" />
+            </center>
+            <right>
+                <Button mnemonicParsing="false" onMouseClicked="#log_out" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: white; -fx-border-color: #000000; -fx-border-radius: 30; -fx-cursor: hand;" text="Logout" textAlignment="RIGHT">
+                    <BorderPane.margin>
+                        <Insets right="20.0" />
+                    </BorderPane.margin>
+                </Button>
+            </right>
+        </BorderPane>
     </top>
     <left>
-        <VBox prefHeight="229.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-            <Button mnemonicParsing="false" onMouseClicked="#request_for_a_place" prefHeight="75.0" prefWidth="100.0" text="Request for a place" />
-            <Button mnemonicParsing="false" onMouseClicked="#pay_bill" prefHeight="75.0" prefWidth="100.0" text="Pay bill" />
-            <Button mnemonicParsing="false" onMouseClicked="#add_products" prefHeight="75.0" prefWidth="100.0" text="Add Poducts" />
+        <VBox prefHeight="550.0" prefWidth="184.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="My Profile">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onMouseClicked="#request_for_a_place" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="My Stalls">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onMouseClicked="#pay_bill" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="Pay Bill">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
         </VBox>
     </left>
     <center>
-        <StackPane fx:id="page" prefHeight="300.0" prefWidth="501.0" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="contentArea" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>
