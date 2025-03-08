@@ -1,17 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.allocatestallrent">
-   <children>
-      <Button layoutX="62.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="26.0" prefWidth="115.0" text="Open Map" />
-      <Label layoutX="86.0" layoutY="302.0" prefHeight="26.0" prefWidth="127.0" text="    Selected   Location:" />
-      <TextField fx:id="rent_amount" layoutX="86.0" layoutY="349.0" prefHeight="26.0" prefWidth="154.0" promptText="   Enter   rent   amount  :" />
-      <Button layoutX="281.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#allocate_rent" prefHeight="26.0" prefWidth="105.0" text="Allocate rent" />
-      <Text fx:id="massage" layoutX="213.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected location" wrappingWidth="386.4000488281249" />
-      <BorderPane fx:id="page" layoutX="232.0" layoutY="3.0" prefHeight="296.0" prefWidth="320.0" />
-      <Button layoutX="334.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#delete_stall" prefHeight="26.0" prefWidth="105.0" text="Delete stall" />
-   </children>
-</AnchorPane>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #8B6914; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.allocatestallrent">
+
+   <padding>
+      <Insets bottom="10" left="10" right="10" top="10" />
+   </padding>
+
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="40" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="60" />
+   </columnConstraints>
+
+   <rowConstraints>
+      <RowConstraints percentHeight="80" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
+   </rowConstraints>
+
+   <!-- Left Side with Open Map Button -->
+   <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <Button mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Open Map" />
+   </VBox>
+
+   <!-- Map Area (BorderPane) -->
+   <BorderPane fx:id="page" style="-fx-background-color: #e0e0e0; -fx-border-color: #0078d7; -fx-border-width: 1; -fx-border-style: dashed;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+      <!-- Blue Markers (Corner Indicators) -->
+      <top>
+         <HBox>
+            <children>
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+            </children>
+         </HBox>
+      </top>
+      <bottom>
+         <HBox>
+            <children>
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+            </children>
+         </HBox>
+      </bottom>
+   </BorderPane>
+
+   <!-- Selected Location Section -->
+   <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <Text fx:id="massage" textAlignment="CENTER" wrappingWidth="264.45118713378906" />
+   </HBox>
+
+   <!-- Delete Stall Button -->
+   <HBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Button mnemonicParsing="false" onMouseClicked="#delete_stall" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Delete stall" />
+   </HBox>
+
+   <!-- Rent Amount Input -->
+   <HBox alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+      <TextField fx:id="rent_amount" prefHeight="30.0" prefWidth="272.0" promptText="Enter rent amount :" style="-fx-background-color: white; -fx-border-color: #999999; -fx-border-radius: 4;" />
+   </HBox>
+
+   <!-- Allocate Rent Button -->
+   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button mnemonicParsing="false" onMouseClicked="#allocate_rent" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Allocate rent" />
+   </HBox>
+</GridPane>

@@ -22,13 +22,14 @@ public class allocatestallrent implements map_controller {
 
     private double selectedLat = -180;
     private double selectedLon = -180;
-    HashMap<location_info, Boolean>loc;
+    HashMap<location_info, Boolean> loc;
+    mapviewer mapViewer;
 
     @FXML
     void open_map(MouseEvent event) {
         try {
             loc = new HashMap<>();
-            mapviewer mapViewer = new mapviewer(this);
+            mapViewer = new mapviewer(this);
             location_sql sql = new location_sql();
             ArrayList<location_info> locations = sql.getLocations();
             for (location_info Location : locations) {
@@ -51,17 +52,21 @@ public class allocatestallrent implements map_controller {
         try{
             location_info checkLocation = new location_info(selectedLat, selectedLon);
             if (!loc.containsKey(checkLocation) || loc.get(checkLocation) == null || !loc.get(checkLocation)) {
-                System.out.println("Can not be deleted");
-                return;
+                massage.setText("Location Can not be deleted");
             }
             else {
-                System.out.println("done");
+                location_sql sql = new location_sql();
+                if(sql.delete_location(selectedLat, selectedLon)){
+                    massage.setText("Location has been deleted");
+                    loc.remove(checkLocation);
+                }
+                else massage.setText("Location deletion failed");
             }
-            location_sql sql = new location_sql();
-            sql.delete_location(selectedLat, selectedLon);
+
 //            System.out.println("Deleted location: " + selectedLat + ", " + selectedLon);
         }
         catch (Exception e) {
+            massage.setText("Error deleting location: ");
             System.err.println("Error deleting stall");
         }
     }
@@ -90,12 +95,16 @@ public class allocatestallrent implements map_controller {
                 return;
             }
 
-            location_sql loc = new location_sql();
-            if(loc.check_location(selectedLat, selectedLon)) loc.update_location(selectedLat,selectedLon,rent_amount.getText());
-            else loc.insert_location(selectedLat, selectedLon, rent_amount.getText());
+            location_sql loc_sql = new location_sql();
+            if(loc_sql.check_location(selectedLat, selectedLon) && loc_sql.update_location(selectedLat,selectedLon,rent_amount.getText())) massage.setText("Rent updated successfully");
+            else if(loc_sql.insert_location(selectedLat, selectedLon, rent_amount.getText())){
+                massage.setText("New stall allocated successfully");
+                loc.put(new location_info(selectedLat, selectedLon),true);
+            }
+            else massage.setText("Operation failed");
         } catch (Exception e) {
             System.err.println("Error allocating rent: " + e.getMessage());
-            massage.setText("Error: " + e.getMessage());
+            massage.setText("Error in allocating stall");
         }
     }
 
