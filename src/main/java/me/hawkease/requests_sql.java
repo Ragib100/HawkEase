@@ -15,17 +15,17 @@ public class requests_sql {
         }
     }
 
-    public void request_location(double lat, double lon){
+    public boolean request_location(double lat, double lon){
         String email = current_user.get_user().get_email();
-        if(check(email, lat, lon)) return;
+        if(check(email, lat, lon)) return false;
         if(email == null) {
             System.out.println("Email is null");
-            return;
+            return false;
         }
         shop_keepers_sql shop_keepers_sql = new shop_keepers_sql();
         if(!shop_keepers_sql.is_under_3(email)){
             System.out.println("Email is not under 3");
-            return;
+            return false;
         }
         else System.out.println("Email: " + email);
         String query = "INSERT INTO requests(email,latitude,longitude) VALUES (?, ?, ?)";
@@ -34,15 +34,10 @@ public class requests_sql {
             stmt.setDouble(2, lat);
             stmt.setDouble(3, lon);
             int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("request inserted successfully!");
-            }
-            else {
-                System.out.println("request insertion failed.");
-            }
+            return rowsInserted > 0;
         }
         catch(SQLException e){
-            System.out.println("Error in request_location");
+            return false;
         }
     }
 
@@ -64,18 +59,18 @@ public class requests_sql {
         return requests;
     }
 
-    public void delete_request(String email,double lat,double lon){
+    public boolean delete_request(String email,double lat,double lon){
         String query = "DELETE FROM requests WHERE email = ? AND latitude = ? AND longitude = ?";
         try(PreparedStatement stmt = con.prepareStatement(query)){
             stmt.setString(1, email);
             stmt.setDouble(2, lat);
             stmt.setDouble(3, lon);
             int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) System.out.println("request deleted successfully!");
-            else System.out.println("request deletion failed.");
+            if (rowsDeleted > 0) return true;
+            else return false;
         }
         catch(SQLException e){
-            System.out.println("Error in delete_request");
+            return false;
         }
     }
 

@@ -40,6 +40,7 @@ public class requestforaplace implements map_controller {
             mapViewer.setExistingLocations(loc);
             mapViewer.show();
         } catch (Exception e) {
+
             System.err.println("Error opening map: " + e.getMessage());
             if (locationText != null) {
                 locationText.setText("Error opening map");
@@ -48,11 +49,11 @@ public class requestforaplace implements map_controller {
     }
 
     @FXML
-    void requestt(MouseEvent event) {
+    void request(MouseEvent event) {
         System.out.println(selectedLat + " " + selectedLon);
         try {
             // Validate input
-            System.out.println(selectedLat + " " + selectedLon);
+            locationText.setText("Selected location: " + selectedLat + " " + selectedLon);
             if (selectedLat == -180 || selectedLon == -180) {
                 if (locationText != null) {
                     locationText.setText("Please select a location first");
@@ -62,22 +63,20 @@ public class requestforaplace implements map_controller {
 
             location_info checkLocation = new location_info(selectedLat, selectedLon);
             if (loc.containsKey(checkLocation) && !loc.get(checkLocation)) {
-                System.out.println("Can not be requested");
+                locationText.setText("Can not be requested");
                 return;
-            }
-            else {
-                System.out.println("done");
             }
 
             if (locationText != null) {
                 location_sql sql = new location_sql();
                 if(!sql.check_location(selectedLat,selectedLon)) {
-                    System.out.println("Invalid location");
+                    locationText.setText("Invalid location");
                     return;
                 }
 
                 requests_sql mysql = new requests_sql();
-                mysql.request_location(selectedLat, selectedLon);
+                if(mysql.request_location(selectedLat, selectedLon)) locationText.setText("Requesting stall successful");
+                else locationText.setText("Requesting stall failed");
             }
 
             selectedLat = -180;
@@ -107,18 +106,4 @@ public class requestforaplace implements map_controller {
         return page;
     }
 
-    void sort_locations(){
-        if (locations != null) {
-            System.out.println("Locations found");
-            locations.sort((l1, l2) -> {
-                if (l1 == null && l2 == null) return 0;
-                if (l1 == null) return -1;
-                if (l2 == null) return 1;
-
-                int latCompare = Double.compare(l1.getLatitude(), l2.getLatitude());
-                if (latCompare != 0) return latCompare;
-                return Double.compare(l1.getLongitude(), l2.getLongitude());
-            });
-        }
-    }
 }

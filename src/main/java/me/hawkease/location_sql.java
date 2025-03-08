@@ -14,7 +14,7 @@ public class location_sql {
         }
     }
 
-    public void insert_location(double lat, double lon,String rent_amount) {
+    public boolean insert_location(double lat, double lon,String rent_amount) {
 
         String query = "INSERT INTO allocated_locations(latitude,longitude,rent) VALUES (?, ?, ?)";
 
@@ -26,16 +26,19 @@ public class location_sql {
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Location inserted successfully!");
+                return true;
             } else {
                 System.out.println("Location insertion failed.");
+                return false;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to insert user.");
+            return false;
         }
     }
 
-    public void update_location(double lat, double lon,String rent_amount) {
+    public boolean update_location(double lat, double lon,String rent_amount) {
         String query = "UPDATE allocated_locations SET rent = ? WHERE latitude = ? AND longitude = ?";
 
         try(PreparedStatement stmt = con.prepareStatement(query)){
@@ -46,13 +49,16 @@ public class location_sql {
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Location updated successfully!");
+                return true;
             }
             else {
                 System.out.println("Location update failed.");
+                return false;
             }
         }
         catch (SQLException e) {
             System.out.println("Failed to update user.");
+            return false;
         }
     }
 
@@ -73,7 +79,7 @@ public class location_sql {
         return false;
     }
 
-    public void delete_location(double lat, double lon) {
+    public boolean delete_location(double lat, double lon) {
         String query = "DELETE FROM allocated_locations WHERE latitude = ? AND longitude = ?";
         try(PreparedStatement stmt = con.prepareStatement(query)){
             stmt.setString(1,String.valueOf(lat));
@@ -82,13 +88,16 @@ public class location_sql {
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Location deleted successfully!");
+                return true;
             }
             else {
                 System.out.println("Location deletion failed.");
+                return false;
             }
         }
         catch (SQLException e) {
             System.out.println("Location not found.");
+            return false;
         }
     }
 

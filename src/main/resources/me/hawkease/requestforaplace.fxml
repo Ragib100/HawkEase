@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.requestforaplace">
-   <children>
-      <Button layoutX="78.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="47.0" prefWidth="100.0" text="Open map" />
-      <Label layoutX="78.0" layoutY="314.0" prefHeight="27.0" prefWidth="122.0" text="    Selected Location:" />
-      <Button layoutX="429.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#requestt" prefHeight="38.0" prefWidth="59.0" text="Request" />
-      <Text fx:id="locationText" layoutX="210.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" location" wrappingWidth="141.336669921875" />
-      <BorderPane fx:id="page" layoutX="243.0" layoutY="46.0" prefHeight="243.0" prefWidth="278.0" />
-   </children>
-</AnchorPane>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #8B6914; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.requestforaplace">
+
+   <padding>
+      <Insets bottom="10" left="10" right="10" top="10" />
+   </padding>
+
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="40" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="60" />
+   </columnConstraints>
+
+   <rowConstraints>
+      <RowConstraints percentHeight="80" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
+   </rowConstraints>
+
+   <!-- Left Side with Open Map Button -->
+   <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <Button mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Open Map" />
+   </VBox>
+
+   <!-- Map Area (BorderPane) -->
+   <BorderPane fx:id="page" style="-fx-background-color: #e0e0e0; -fx-border-color: #0078d7; -fx-border-width: 1; -fx-border-style: dashed;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+      <!-- Blue Markers (Corner Indicators) -->
+      <top>
+         <HBox>
+            <children>
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+            </children>
+         </HBox>
+      </top>
+      <bottom>
+         <HBox>
+            <children>
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
+            </children>
+         </HBox>
+      </bottom>
+   </BorderPane>
+
+   <!-- Selected Location Section -->
+   <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <Text fx:id="locationText" textAlignment="CENTER" wrappingWidth="264.45118713378906" />
+   </HBox>
+
+   <!-- Delete Stall Button -->
+   <HBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Button mnemonicParsing="false" onMouseClicked="#request" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Request]" />
+   </HBox>
+</GridPane>
