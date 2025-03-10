@@ -97,4 +97,27 @@ public class shop_keepers_sql {
         }
         return false;
     }
+
+    public boolean update(double lat, double lon,String name,String address,String type) {
+        String query = "UPDATE shop_keepers SET shop_name = ?,shop_address = ?,product_type = ? WHERE latitude = ? AND longitude = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1,name);
+            stmt.setString(2,address);
+            stmt.setString(3,type);
+            stmt.setDouble(4,lat);
+            stmt.setDouble(5,lon);
+            int row = stmt.executeUpdate();
+            if (row > 0) {
+                System.out.println("Editing successful");
+            }
+            else{
+                System.out.println("Editing failed");
+            }
+            return row > 0;
+        }
+        catch (Exception e) {
+            System.out.println("Error updating locations: ");
+        }
+        return false;
+    }
 }
