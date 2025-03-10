@@ -1,73 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="742.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sign_up_controller">
-   <children>
-      <ImageView fitHeight="489.0" fitWidth="490.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Auth_Background.jpg" />
-         </image>
-      </ImageView>
-      <TextField fx:id="take_user_name" layoutX="511.0" layoutY="161.0" prefHeight="34.0" prefWidth="194.0" promptText="Username">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font></TextField>
-      <TextField fx:id="take_email_address" layoutX="511.0" layoutY="206.0" prefHeight="34.0" prefWidth="194.0" promptText="Email address">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font></TextField>
-      <Button layoutX="511.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#sign_up" prefHeight="26.0" prefWidth="78.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0;" text="Sign up" textFill="#1e0101" />
-      <ComboBox fx:id="sign_up_type" layoutX="511.0" layoutY="339.0" prefHeight="34.0" prefWidth="194.0" promptText="User type">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <effect>
-            <Bloom threshold="0.87" />
-         </effect>
-      </ComboBox>
-      <PasswordField fx:id="take_password" layoutX="511.0" layoutY="250.0" prefHeight="34.0" prefWidth="194.0" promptText="Password ">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font></PasswordField>
-      <PasswordField fx:id="take_password_again" layoutX="511.0" layoutY="295.0" prefHeight="34.0" prefWidth="194.0" promptText="Confirm Password">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font></PasswordField>
-      <Button layoutX="511.0" layoutY="455.0" mnemonicParsing="false" onMouseClicked="#log_in_from_sign_up_page" prefHeight="26.0" prefWidth="125.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0;" text="Already a member?" textFill="#1e0101" />
-      <Text fill="#fffefe" fontSmoothingType="LCD" layoutX="124.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HawkEase community">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Text>
-      <TextFlow fx:id="password_strength_message" layoutX="141.0" layoutY="251.0" prefHeight="34.0" prefWidth="339.0" />
-      <TextFlow fx:id="password_same_message" layoutX="456.0" layoutY="295.0" prefHeight="36.0" prefWidth="23.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="634.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Hawkease.jpg" />
-         </image>
-      </ImageView>
-      <Text fill="#faf4f4" fontSmoothingType="LCD" layoutX="124.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <TextField fx:id="take_otp" layoutX="511.0" layoutY="384.0" prefHeight="34.0" prefWidth="194.0" promptText="Enter OTP">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font>
-      </TextField>
-      <Button layoutX="615.0" layoutY="421.0" mnemonicParsing="false" onMouseClicked="#send_otp" prefHeight="26.0" prefWidth="89.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0;" text="Send otp" textFill="#1e0101" />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="550.0" prefWidth="742.0" style="-fx-background-color: linear-gradient(to right, #7eb6c4, #ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sign_up_controller">
+
+   <left>
+      <VBox alignment="CENTER" prefHeight="550.0" prefWidth="320.0" spacing="15.0" style="-fx-background-color: rgba(62, 151, 183, 0.3); -fx-background-radius: 0 20 20 0;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@attachments/Hawkease.jpg" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+
+            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="280.0" spacing="5.0">
+               <children>
+                  <Text fill="#000000" text="Welcome to">
+                     <font>
+                        <Font name="Segoe UI" size="22.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#000000" text="HawkEase community">
+                     <font>
+                        <Font name="Segoe UI Bold" size="28.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+
+            <VBox alignment="CENTER_LEFT" prefWidth="280.0" spacing="10.0" style="-fx-background-color: rgba(255, 255, 255, 0.7); -fx-background-radius: 10;">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+               <children>
+                  <Text fill="#000000" text="Password Requirements:">
+                     <font>
+                        <Font name="Segoe UI Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#000000" text="• At least 8 characters long" />
+                  <Text fill="#000000" text="• Include at least one uppercase letter" />
+                  <Text fill="#000000" text="• Include at least one lowercase letter" />
+                  <Text fill="#000000" text="• Include at least one number" />
+                  <Text fill="#000000" text="• Include at least one special character" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+
+   <center>
+      <VBox alignment="CENTER" maxWidth="422.0" prefHeight="550.0" spacing="20.0">
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+         <children>
+            <Text fill="#000000" text="Create Your Account">
+               <font>
+                  <Font name="Segoe UI Bold" size="24.0" />
+               </font>
+            </Text>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Username:">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="take_user_name" prefWidth="300.0" promptText="Enter your username" />
+                  <Label fx:id="username_error" textFill="RED" visible="false" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Email address:">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="take_email_address" prefWidth="300.0" promptText="Enter your email address" />
+                  <Label fx:id="email_error" textFill="RED" visible="false" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Password:">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="take_password" prefWidth="300.0" promptText="Enter your password" />
+                  <Label fx:id="password_error" textFill="RED" visible="false" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Confirm Password:">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="take_password_again" prefWidth="300.0" promptText="Confirm your password" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+               <children>
+                  <TextField fx:id="take_otp" prefWidth="300.0" promptText="Enter OTP" visible="false" />
+                  <Label fx:id="otp_error" textFill="RED" visible="false" />
+               </children>
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <children>
+                  <Button onMouseClicked="#sign_up" style="-fx-background-color: #3e97b7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5;" text="Sign up">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="send_otp_button" onMouseClicked="#send_otp" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5;" text="Send OTP">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+
+            <HBox alignment="CENTER">
+               <children>
+                  <Hyperlink onMouseClicked="#log_in_from_sign_up_page" text="Already have an account? Sign in" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+
+</BorderPane>

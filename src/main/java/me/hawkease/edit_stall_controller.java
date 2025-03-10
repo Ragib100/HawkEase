@@ -1,12 +1,18 @@
 package me.hawkease;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class edit_stall_controller implements map_controller {
 
@@ -22,9 +28,43 @@ public class edit_stall_controller implements map_controller {
     private double selectedLon = -180;
 
     @FXML
-    void edit_stall_info(MouseEvent event) {
+void edit_stall_info(MouseEvent event) {
+    try {
+        // Load the FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/edit_stall_popup.fxml"));
+        Parent root = loader.load();
         
+        // Get the controller
+        edit_popup_stall_controller controller = loader.getController();
+        
+        // Create a new stage
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Edit Stall Information");
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(root));
+        
+        // Set the stage in the controller
+        controller.setStage(popupStage);
+        
+        // Show the stage and wait for it to close
+        popupStage.showAndWait();
+        
+        // After the popup is closed, get the values if needed
+        if (controller.getShopName() != null) {
+            String shopName = controller.getShopName();
+            String shopAddress = controller.getShopAddress();
+            String category = controller.getCategory();
+            
+            // Process the data (e.g., save to database)
+            System.out.println("Shop Name: " + shopName);
+            System.out.println("Shop Address: " + shopAddress);
+            System.out.println("Category: " + category);
+        }
+        
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @FXML
     void open_map(MouseEvent event) {
