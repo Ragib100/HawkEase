@@ -2,71 +2,188 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #8B6914; -fx-border-width: 8;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.allocatestallrent">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to bottom right, #f8f9fa, #e9ecef); -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.allocatestallrent">
 
    <padding>
-      <Insets bottom="10" left="10" right="10" top="10" />
+      <Insets bottom="20" left="20" right="20" top="20" />
    </padding>
 
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="40" />
-      <ColumnConstraints hgrow="SOMETIMES" percentWidth="60" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="35" />
+      <ColumnConstraints hgrow="SOMETIMES" percentWidth="65" />
    </columnConstraints>
 
    <rowConstraints>
-      <RowConstraints percentHeight="80" vgrow="SOMETIMES" />
-      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
-      <RowConstraints percentHeight="10" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="12" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="76" vgrow="SOMETIMES" />
+      <RowConstraints percentHeight="12" vgrow="SOMETIMES" />
    </rowConstraints>
 
-   <!-- Left Side with Open Map Button -->
-   <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
-      <Button mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Open Map" />
+   <!-- Header Row with Title -->
+   <VBox alignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="0">
+      <Text fill="#4a5568" strokeType="OUTSIDE" strokeWidth="0.0" text="Stall Rent Allocation Management">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow color="#00000033" height="2.0" radius="0.5" width="2.0" />
+         </effect>
+      </Text>
    </VBox>
 
-   <!-- Map Area (BorderPane) -->
-   <BorderPane fx:id="page" style="-fx-background-color: #e0e0e0; -fx-border-color: #0078d7; -fx-border-width: 1; -fx-border-style: dashed;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-      <!-- Blue Markers (Corner Indicators) -->
-      <top>
-         <HBox>
-            <children>
-               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
-            </children>
+   <!-- Left Side Controls Panel -->
+   <VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <padding>
+         <Insets bottom="15" left="15" right="15" top="15" />
+      </padding>
+      <effect>
+         <DropShadow color="#00000026" height="10.0" radius="4.5" width="10.0" />
+      </effect>
+
+      <!-- Section Title -->
+      <Text fill="#4a5568" strokeType="OUTSIDE" strokeWidth="0.0" text="Control Panel">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+
+      <!-- Map Controls -->
+      <VBox spacing="10" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e9ecef; -fx-border-width: 1;">
+         <padding>
+            <Insets bottom="12" left="12" right="12" top="12" />
+         </padding>
+         <Text fill="#4a5568" text="Map Actions">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Text>
+         <Button mnemonicParsing="false" onMouseClicked="#open_map" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #3498db; -fx-background-radius: 6; -fx-text-fill: white; -fx-font-weight: bold;" text="Open Map">
+            <graphic>
+               <Region prefHeight="20" prefWidth="20" style="-fx-background-color: white; -fx-shape: 'M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z';" />
+            </graphic>
+         </Button>
+         <Separator />
+         <Text fx:id="massage" fill="#4a5568" strokeType="OUTSIDE" strokeWidth="0.0" text="No location selected" textAlignment="CENTER">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+      </VBox>
+
+      <!-- Rent Configuration -->
+      <VBox spacing="10" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e9ecef; -fx-border-width: 1;">
+         <padding>
+            <Insets bottom="12" left="12" right="12" top="12" />
+         </padding>
+         <Text fill="#4a5568" text="Rent Configuration">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Text>
+         <TextField fx:id="rent_amount" prefHeight="40.0" promptText="Enter rent amount" style="-fx-background-color: white; -fx-border-color: #cbd5e0; -fx-border-radius: 6; -fx-background-radius: 6;">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </TextField>
+         <HBox spacing="10">
+            <Button mnemonicParsing="false" onMouseClicked="#allocate_rent" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 6; -fx-text-fill: white; -fx-font-weight: bold;" text="Allocate Rent">
+               <graphic>
+                  <Region prefHeight="20" prefWidth="20" style="-fx-background-color: white; -fx-shape: 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z';" />
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#delete_stall" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 6; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete Stall">
+               <graphic>
+                  <Region prefHeight="20" prefWidth="20" style="-fx-background-color: white; -fx-shape: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z';" />
+               </graphic>
+            </Button>
          </HBox>
-      </top>
-      <bottom>
-         <HBox>
-            <children>
-               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
-               <Region HBox.hgrow="ALWAYS" />
-               <Pane prefHeight="5" prefWidth="5" style="-fx-background-color: #0078d7;" />
-            </children>
-         </HBox>
-      </bottom>
-   </BorderPane>
+      </VBox>
+   </VBox>
 
-   <!-- Selected Location Section -->
-   <HBox alignment="CENTER_LEFT" spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
-      <Text fx:id="massage" textAlignment="CENTER" wrappingWidth="264.45118713378906" />
-   </HBox>
+   <!-- Map Area with Clean Styling -->
+   <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <effect>
+         <DropShadow color="#00000026" height="10.0" radius="4.5" width="10.0" />
+      </effect>
 
-   <!-- Delete Stall Button -->
-   <HBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <Button mnemonicParsing="false" onMouseClicked="#delete_stall" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Delete stall" />
-   </HBox>
+      <BorderPane fx:id="page" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <!-- Map Grid Overlay -->
+         <center>
+            <GridPane gridLinesVisible="true" style="-fx-background-color: rgba(100, 100, 100, 0.05);">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </center>
 
-   <!-- Rent Amount Input -->
-   <HBox alignment="CENTER_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="2">
-      <TextField fx:id="rent_amount" prefHeight="30.0" prefWidth="272.0" promptText="Enter rent amount :" style="-fx-background-color: white; -fx-border-color: #999999; -fx-border-radius: 4;" />
-   </HBox>
+         <!-- Map Overlay Text -->
+         <center>
+            <StackPane>
+               <children>
+                  <Text fill="#00000040" rotate="-45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAP AREA">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+         </center>
 
-   <!-- Allocate Rent Button -->
-   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
-      <Button mnemonicParsing="false" onMouseClicked="#allocate_rent" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(#f2f2f2, #d6d6d6); -fx-background-radius: 4; -fx-border-color: #999999; -fx-border-radius: 4;" text="Allocate rent" />
+         <!-- Corner Markers with Improved Design -->
+         <top>
+            <HBox>
+               <children>
+                  <Pane prefHeight="8" prefWidth="8" style="-fx-background-color: #3498db; -fx-background-radius: 4 0 4 0;" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Pane prefHeight="8" prefWidth="8" style="-fx-background-color: #3498db; -fx-background-radius: 0 4 0 4;" />
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <HBox>
+               <children>
+                  <Pane prefHeight="8" prefWidth="8" style="-fx-background-color: #3498db; -fx-background-radius: 0 4 0 4;" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Pane prefHeight="8" prefWidth="8" style="-fx-background-color: #3498db; -fx-background-radius: 4 0 4 0;" />
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </StackPane>
+
+   <!-- Footer Status Bar -->
+   <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f8f9fa; -fx-background-radius: 6; -fx-border-radius: 6; -fx-border-color: #e9ecef; -fx-border-width: 1;" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <padding>
+         <Insets bottom="8" left="15" right="15" top="8" />
+      </padding>
+      <Text fill="#4a5568" text="Status:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#4a5568" text="Ready to allocate stalls. Select a location on the map.">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Region HBox.hgrow="ALWAYS" />
+      <Text fill="#4a5568" text="HawkEase Stall Management System">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Text>
    </HBox>
 </GridPane>
