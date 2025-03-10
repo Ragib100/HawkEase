@@ -6,7 +6,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
     <top>
-        <BorderPane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
+        <BorderPane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 0 0;">
             <center>
                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Seller Panel" />
             </center>
@@ -20,7 +20,7 @@
         </BorderPane>
     </top>
     <left>
-        <VBox prefHeight="530.0" prefWidth="160.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+        <VBox prefHeight="530.0" prefWidth="160.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
                 <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="My Profile">
                     <VBox.margin>

@@ -33,7 +33,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            System.out.println("Error in loading fxml: ");
         }
     }
 
@@ -46,7 +46,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            System.out.println("Error in loading fxml: ");
         }
     }
 
@@ -59,7 +59,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            System.out.println("Error in loading fxml: ");
         }
     }
 

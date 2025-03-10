@@ -1,0 +1,198 @@
+/* Main background styles */
+.main-background {
+    -fx-background-color: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+}
+
+/* Title label */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 0, 1);
+}
+
+/* User name label */
+.user-name-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* User type label */
+.user-type-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #566573;
+    -fx-font-style: italic;
+}
+
+/* Profile image styles */
+.profile-image-container {
+    -fx-background-color: white;
+    -fx-background-radius: 55px;
+    -fx-min-width: 110px;
+    -fx-min-height: 110px;
+    -fx-max-width: 110px;
+    -fx-max-height: 110px;
+    -fx-padding: 3px;
+}
+
+.profile-image {
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+.profile-image-background {
+    -fx-fill: linear-gradient(to bottom right, #3498db, #2980b9);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+/* Button styles */
+.image-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.image-button:hover {
+    -fx-background-color: #2980b9;
+    -fx-cursor: hand;
+}
+
+.save-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.save-button:hover {
+    -fx-background-color: #27ae60;
+    -fx-cursor: hand;
+}
+
+.cancel-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 0, 1);
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c0392b;
+    -fx-cursor: hand;
+}
+
+/* TitledPane styles */
+.profile-pane {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+    -fx-background-radius: 5px;
+}
+
+.profile-pane > .title {
+    -fx-background-color: linear-gradient(to right, #3498db, #4ca5db);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px 5px 0px 0px;
+}
+
+.profile-pane > .content {
+    -fx-background-color: white;
+    -fx-background-radius: 0px 0px 5px 5px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-border-radius: 0px 0px 5px 5px;
+}
+
+/* Scroll pane styles */
+.profile-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.profile-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Form styles */
+.form-grid {
+    -fx-background-color: white;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.profile-field {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.profile-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: white;
+}
+
+/* Icon styles - using CSS region backgrounds for simplicity */
+.person-icon {
+    -fx-background-image: url('/images/person-icon.png');
+    -fx-background-size: 16px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+}
+
+.lock-icon {
+    -fx-background-image: url('/images/lock-icon.png');
+    -fx-background-size: 16px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+}
+
+/* ComboBox styles */
+.combo-box {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px;
+}
+
+.combo-box:focused {
+    -fx-border-color: #3498db;
+}
+
+/* CheckBox styles */
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #95a5a6;
+    -fx-border-radius: 3px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #3498db;
+}
+
+/* Button container */
+.button-container {
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 1px 0px 0px 0px;
+    -fx-border-style: solid;
+}

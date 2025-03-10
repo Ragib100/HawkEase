@@ -1,14 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="me.hawkease.profile_controller"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane fx:id="mainLayout" prefHeight="700.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.ProfileController">
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+    </padding>
 
-</AnchorPane>
+    <stylesheets>
+        <URL value="@profile-styles.css" />
+    </stylesheets>
+
+    <top>
+        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="25.0" top="15.0" />
+            </padding>
+            <children>
+                <Label styleClass="title-label" text="My Profile">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+
+                <HBox alignment="CENTER" spacing="30.0">
+                    <children>
+                        <StackPane>
+                            <children>
+                                <Circle fx:id="profileImageBackground" radius="60.0" styleClass="profile-image-background" />
+                                <StackPane styleClass="profile-image-container">
+                                    <children>
+                                        <ImageView fx:id="profileImageView" fitHeight="110.0" fitWidth="110.0" preserveRatio="true" styleClass="profile-image" />
+                                    </children>
+                                    <effect>
+                                        <DropShadow color="#00000060" height="10.0" radius="4.5" width="10.0" />
+                                    </effect>
+                                </StackPane>
+                            </children>
+                        </StackPane>
+
+                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                            <children>
+                                <Label fx:id="nameLabel" styleClass="user-name-label" text="John Doe">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="userTypeLabel" styleClass="user-type-label" text="User Type: BUYER" />
+                                <Button fx:id="selectImageButton" onAction="#handleSelectImage" styleClass="image-button" text="Change Profile Picture" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" pannable="true" styleClass="profile-scroll-pane">
+            <content>
+                <VBox spacing="15.0">
+                    <padding>
+                        <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                    </padding>
+                    <children>
+                        <TitledPane animated="true" styleClass="profile-pane" text="Personal Information">
+                            <graphic>
+                                <Region styleClass="person-icon" />
+                            </graphic>
+                            <content>
+                                <GridPane hgap="15.0" styleClass="form-grid" vgap="15.0">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="300.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label styleClass="field-label" text="Full Name:" />
+                                        <TextField fx:id="nameField" promptText="Enter your full name" styleClass="profile-field" GridPane.columnIndex="1" />
+                                        <Label styleClass="field-label" text="Email:" GridPane.rowIndex="1" />
+                                        <TextField fx:id="emailField" promptText="Enter your email" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label styleClass="field-label" text="Phone:" GridPane.rowIndex="2" />
+                                        <TextField fx:id="phoneField" promptText="Enter your phone number" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label styleClass="field-label" text="Address:" GridPane.rowIndex="3" />
+                                        <TextField fx:id="addressField" promptText="Enter your address" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </TitledPane>
+
+                        <TitledPane animated="true" styleClass="profile-pane" text="Change Password">
+                            <graphic>
+                                <Region styleClass="lock-icon" />
+                            </graphic>
+                            <content>
+                                <GridPane hgap="15.0" styleClass="form-grid" vgap="15.0">
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="300.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label styleClass="field-label" text="Current Password:" />
+                                        <PasswordField fx:id="currentPasswordField" promptText="Enter current password" styleClass="profile-field" GridPane.columnIndex="1" />
+                                        <Label styleClass="field-label" text="New Password:" GridPane.rowIndex="1" />
+                                        <PasswordField fx:id="newPasswordField" promptText="Enter new password" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label styleClass="field-label" text="Confirm Password:" GridPane.rowIndex="2" />
+                                        <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </TitledPane>
+
+                        <!-- Placeholder for user type specific fields - will be populated dynamically -->
+                        <TitledPane fx:id="specificInfoPane" animated="true" styleClass="profile-pane" text="User Specific Information" visible="false" />
+
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="button-container" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="25.0" />
+            </padding>
+            <children>
+                <Button fx:id="cancelButton" onAction="#handleCancel" prefWidth="120.0" styleClass="cancel-button" text="Cancel" />
+                <Button fx:id="saveButton" onAction="#handleSave" prefWidth="120.0" styleClass="save-button" text="Save Changes" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

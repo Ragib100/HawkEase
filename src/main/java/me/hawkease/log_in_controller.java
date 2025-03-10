@@ -54,7 +54,7 @@ public class log_in_controller implements Initializable {
                 }
                 case "Buyer" -> {
                     try {
-                        fxmlLoader.load_fxml("buyerhomepageController.fxml");
+                        fxmlLoader.load_fxml("buyerhome.fxml");
                     } catch (IOException e) {
                         System.out.println("Try again");
                     }
