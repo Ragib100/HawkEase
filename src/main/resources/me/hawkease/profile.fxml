@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainLayout" prefHeight="700.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.ProfileController">
+<BorderPane fx:id="mainLayout" prefHeight="700.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.ProfileController">
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
@@ -48,12 +60,11 @@
 
                         <VBox alignment="CENTER_LEFT" spacing="5.0">
                             <children>
-                                <Label fx:id="nameLabel" styleClass="user-name-label" text="John Doe">
+                                <Label fx:id="nameLabel" styleClass="user-name-label">
                                     <font>
                                         <Font name="System Bold" size="20.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="userTypeLabel" styleClass="user-type-label" text="User Type: BUYER" />
                                 <Button fx:id="selectImageButton" onAction="#handleSelectImage" styleClass="image-button" text="Change Profile Picture" />
                             </children>
                         </VBox>
@@ -152,7 +163,7 @@
                 <Insets top="25.0" />
             </padding>
             <children>
-                <Button fx:id="cancelButton" onAction="#handleCancel" prefWidth="120.0" styleClass="cancel-button" text="Cancel" />
+                <Button fx:id="cancelButton" disable="true" onAction="#handleCancel" prefWidth="120.0" styleClass="cancel-button" text="Cancel" visible="false" />
                 <Button fx:id="saveButton" onAction="#handleSave" prefWidth="120.0" styleClass="save-button" text="Save Changes" />
             </children>
         </HBox>

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.seller_homepage_controller">
     <top>
         <BorderPane prefHeight="70.0" prefWidth="800.0" styleClass="border-pane-top">
             <left>
@@ -52,6 +57,11 @@
                     <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-stalls" />
                 </graphic>
             </Button>
+         <Button layoutX="10.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#edit_stalls" styleClass="sidebar-button" text="Edit stalls">
+            <graphic>
+               <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-bills" />
+            </graphic>
+         </Button>
             <Button mnemonicParsing="false" onMouseClicked="#pay_bill" styleClass="sidebar-button" text="Pay Bill">
                 <graphic>
                     <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-bills" />
