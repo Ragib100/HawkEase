@@ -62,11 +62,6 @@
                     <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-bills" />
                 </graphic>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" styleClass="sidebar-button" text="Reports &amp; Analytics">
-                <graphic>
-                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-reports" />
-                </graphic>
-            </Button>
             <VBox VBox.vgrow="ALWAYS" />
             <Text fill="white" text="© 2025 HawkEase" textAlignment="CENTER" wrappingWidth="199.93555450439453">
                 <VBox.margin>

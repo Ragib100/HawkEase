@@ -74,4 +74,16 @@ public class seller_homepage_controller {
         }
     }
 
+    @FXML
+    void edit_stalls(MouseEvent event){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit_stalls.fxml"));
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
+        }
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
+    }
 }
