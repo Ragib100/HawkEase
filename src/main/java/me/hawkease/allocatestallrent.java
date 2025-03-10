@@ -33,7 +33,7 @@ public class allocatestallrent implements map_controller {
             locations_sql sql = new locations_sql();
             ArrayList<location_info> locations = sql.getLocations();
             for (location_info Location : locations) {
-                loc.put(new location_info(Location.getLatitude(), Location.getLongitude()),true);
+                loc.put(new location_info(Location.getLatitude(), Location.getLongitude()),Boolean.TRUE);
             }
             shop_keepers_sql sql1 = new shop_keepers_sql();
             locations = sql1.getLocations();

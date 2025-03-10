@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+
+<VBox fx:id="searchContainer" alignment="TOP_CENTER" spacing="15" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.SearchPageController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <Label text="Search Products" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    
+    <!-- Search bar with category selection -->
+    <HBox alignment="CENTER" spacing="10">
+        <!-- Category ComboBox -->
+        <ComboBox fx:id="categoryComboBox" prefHeight="40" style="-fx-font-size: 14px;">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="All Categories" />
+                    <String fx:value="Clothing" />
+                    <String fx:value="Food" />
+                    <String fx:value="Electronics" />
+                    <String fx:value="Home" />
+                    <String fx:value="Beauty" />
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:value="All Categories" />
+            </value>
+        </ComboBox>
+    </HBox>
+    
+    <!-- Results container -->
+    <VBox spacing="10">
+        <padding>
+            <Insets top="10" right="0" bottom="0" left="0" />
+        </padding>
+        
+        <Label text="Search Results" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        
+        <!-- TableView for stalls -->
+        <TableView fx:id="stallTable" prefHeight="400" prefWidth="800">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Stall Name" prefWidth="200" />
+                <TableColumn fx:id="ownerColumn" text="Owner" prefWidth="150" />
+                <TableColumn fx:id="locationColumn" text="Location" prefWidth="150" />
+                <TableColumn fx:id="ratingColumn" text="Rating" prefWidth="100" />
+                <TableColumn fx:id="actionColumn" text="Actions" prefWidth="200" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>
