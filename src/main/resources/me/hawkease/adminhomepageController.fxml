@@ -3,54 +3,86 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.admin_homepage_controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.admin_homepage_controller">
     <top>
-        <BorderPane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
+        <BorderPane prefHeight="70.0" prefWidth="800.0" styleClass="border-pane-top">
+            <left>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="app-title" text="HawkEase" />
+                </HBox>
+            </left>
             <center>
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Admin Panel" />
+                <HBox alignment="CENTER">
+                    <Label styleClass="app-title" text="Admin Dashboard" />
+                </HBox>
             </center>
             <right>
-                <Button mnemonicParsing="false" onMouseClicked="#log_out" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: white; -fx-border-color: #000000; -fx-border-radius: 30; -fx-cursor: hand;" text="Logout" textAlignment="RIGHT">
-                    <BorderPane.margin>
-                        <Insets right="20.0" />
-                    </BorderPane.margin>
-                </Button>
+                <HBox alignment="CENTER_RIGHT" spacing="15">
+                    <Label styleClass="user-label" text="Admin" />
+                    <Button mnemonicParsing="false" onMouseClicked="#log_out" styleClass="logout-button" text="Logout" />
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </HBox>
             </right>
         </BorderPane>
     </top>
     <left>
-        <VBox prefHeight="530.0" prefWidth="160.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="My Profile">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#stalls" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Stalls">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Pending Request">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#check_bills" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Bills">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Review">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
+        <VBox prefHeight="530.0" prefWidth="200.0" styleClass="sidebar">
+            <VBox alignment="CENTER" prefHeight="100.0">
+                <padding>
+                    <Insets bottom="20.0" />
+                </padding>
+                <Label style="-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;" text="Admin Portal" />
+            </VBox>
+         <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#home" styleClass="sidebar-button" text="Home">
+            <graphic>
+               <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-profile" />
+            </graphic>
+         </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#open_profile" styleClass="sidebar-button" text="My Profile">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-profile" />
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#stalls" styleClass="sidebar-button" text="Stalls Management">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-stalls" />
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#pending_req" styleClass="sidebar-button" text="Pending Requests">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-pending" />
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#check_bills" styleClass="sidebar-button" text="Bills &amp; Payments">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-bills" />
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" styleClass="sidebar-button" text="Reports &amp; Analytics">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-reports" />
+                </graphic>
+            </Button>
+            <VBox VBox.vgrow="ALWAYS" />
+            <Text fill="white" text="© 2025 HawkEase" textAlignment="CENTER" wrappingWidth="199.93555450439453">
+                <VBox.margin>
+                    <Insets bottom="15.0" />
+                </VBox.margin>
+            </Text>
         </VBox>
     </left>
     <center>
-        <StackPane fx:id="page" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="page" styleClass="content-area" BorderPane.alignment="CENTER">
+            <!-- This is where different pages will be loaded -->
+            <VBox alignment="CENTER" spacing="30">
+                <HBox alignment="CENTER">
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Welcome to Admin Dashboard" />
+                </HBox>
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>

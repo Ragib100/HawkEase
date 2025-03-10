@@ -3,39 +3,70 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.buyerhomepageController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.buyerhomepageController">
     <top>
-        <BorderPane prefHeight="87.0" prefWidth="800.0" style="-fx-background-color: white;">
+        <BorderPane prefHeight="70.0" prefWidth="800.0" styleClass="border-pane-top">
+            <left>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="app-title" text="HawkEase" />
+                </HBox>
+            </left>
             <center>
-                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Welcome to Buyer Panel" />
+                <HBox alignment="CENTER">
+                    <Label styleClass="app-title" text="Buyer Dashboard" />
+                </HBox>
             </center>
             <right>
-                <Button mnemonicParsing="false" onMouseClicked="#log_out" prefHeight="42.0" prefWidth="56.0" style="-fx-background-color: white; -fx-border-color: #000000; -fx-border-radius: 30; -fx-cursor: hand;" text="Logout" textAlignment="RIGHT">
-                    <BorderPane.margin>
-                        <Insets right="20.0" />
-                    </BorderPane.margin>
-                </Button>
+                <HBox alignment="CENTER_RIGHT" spacing="15">
+                    <Label styleClass="user-label" text="Buyer" />
+                    <Button mnemonicParsing="false" onMouseClicked="#log_out" styleClass="logout-button" text="Logout" />
+                    <padding>
+                        <Insets right="10.0" />
+                    </padding>
+                </HBox>
             </right>
         </BorderPane>
     </top>
     <left>
-        <VBox prefHeight="513.0" prefWidth="158.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="My Profile">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#search" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="Search">
-                    <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
+        <VBox prefHeight="530.0" prefWidth="200.0" styleClass="sidebar">
+            <VBox alignment="CENTER" prefHeight="100.0">
+                <padding>
+                    <Insets bottom="20.0" />
+                </padding>
+                <Label style="-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;" text="Buyer Portal" />
+            </VBox>
+         <Button layoutX="10.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#home" styleClass="sidebar-button" text="Home">
+            <graphic>
+               <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-profile" />
+            </graphic>
+         </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#open_profile" styleClass="sidebar-button" text="My Profile">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-profile" />
+                </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#search" styleClass="sidebar-button" text="Search Stalls">
+                <graphic>
+                    <Region prefHeight="20.0" prefWidth="20.0" styleClass="icon-search" />
+                </graphic>
+            </Button>
+            <VBox VBox.vgrow="ALWAYS" />
+            <Text fill="white" text="© 2025 HawkEase" textAlignment="CENTER" wrappingWidth="192.93555450439453">
+                <VBox.margin>
+                    <Insets bottom="15.0" />
+                </VBox.margin>
+            </Text>
         </VBox>
     </left>
     <center>
-        <StackPane fx:id="page" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="page" styleClass="content-area" BorderPane.alignment="CENTER">
+            <!-- Empty content area for dynamic loading -->
+            <VBox alignment="CENTER">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Welcome to Buyer Dashboard" />
+                <Pane prefHeight="20" />
+            </VBox>
+        </StackPane>
     </center>
 </BorderPane>

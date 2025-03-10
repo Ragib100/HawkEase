@@ -3,6 +3,8 @@ package me.hawkease;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,6 +26,17 @@ public class buyerhomepageController {
 
     @FXML
     private StackPane page;
+
+    @FXML
+    void home(MouseEvent event) {
+        try {
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("buyerhome.fxml");
+        }
+        catch (IOException e){
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
+    }
 
     @FXML
     void log_out(MouseEvent event) {

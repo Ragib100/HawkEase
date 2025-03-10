@@ -25,6 +25,17 @@ public class seller_homepage_controller {
     }
 
     @FXML
+    void home(MouseEvent event) {
+        try {
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("sellerhomepageController.fxml");
+        }
+        catch (IOException e){
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
+    }
+
+    @FXML
     void open_profile(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile.fxml"));

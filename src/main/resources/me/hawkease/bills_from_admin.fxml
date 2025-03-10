@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.bills_from_admin_controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.bills_from_admin_controller">
    <top>
-      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="600.0" styleClass="form-header-box" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Insert Bills">
+            <Label styleClass="bills-form-header" text="Insert Bills" textFill="WHITE">
                <font>
                   <Font size="27.0" />
                </font>
@@ -18,24 +18,36 @@
       </HBox>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="320.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="320.0" prefWidth="508.0" spacing="15.0" styleClass="bills-form-container" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="tranx_id" maxHeight="25.0" maxWidth="200.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter the transaction id">
+            <TextField fx:id="tranx_id" maxHeight="25.0" maxWidth="300.0" prefHeight="40.0" prefWidth="280.0" promptText="Enter the transaction ID" styleClass="bills-text-field">
                <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin></TextField>
-            <TextField fx:id="amount" layoutX="210.0" layoutY="144.0" maxHeight="25.0" maxWidth="200.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter the bill amount">
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="amount" layoutX="210.0" layoutY="144.0" maxHeight="25.0" maxWidth="300.0" prefHeight="40.0" prefWidth="280.0" promptText="Enter the bill amount" styleClass="bills-text-field">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onMouseClicked="#enter_bill" styleClass="submit-button" text="Submit">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
-            </TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#enter_bill" text="Submit">
+            </Button>
+            <Text fx:id="massage" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="feedback-message" wrappingWidth="300.0" textAlignment="CENTER" />
+            <Button layoutX="284.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#process_bills" styleClass="process-button" text="Process the bills">
                <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin></Button>
-            <Text fx:id="massage" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="194.13671493530273" />
-            <Button layoutX="284.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#process_bills" text="Process the bills" />
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
       </VBox>
    </center>
 </BorderPane>
