@@ -3,10 +3,10 @@ package me.hawkease;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class location_sql {
+public class locations_sql {
     private Connection con;
 
-    public location_sql() {
+    public locations_sql() {
         try{
             con = database_connection.get_connection().sql_connection();
         } catch (Exception e) {

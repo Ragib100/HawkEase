@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 
-public class bills_from_admin_sql {
+public class admin_bill_sql {
     private Connection con;
 
-    public bills_from_admin_sql() {
+    public admin_bill_sql() {
         try{
             con = database_connection.get_connection().sql_connection();
         }
@@ -29,7 +29,7 @@ public class bills_from_admin_sql {
         }
         return false;
     }
-    
+
     public HashMap<String, Integer> get_bills() {
         HashMap<String, Integer> bills = new HashMap<>();
         String query = "SELECT * FROM bills_from_admin";

@@ -27,6 +27,17 @@ public class admin_homepage_controller {
     }
 
     @FXML
+    void home(MouseEvent event) {
+        try {
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("adminhomepageController.fxml");
+        }
+        catch (IOException e){
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
+    }
+
+    @FXML
     void pending_req(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pendingreq.fxml"));

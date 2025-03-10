@@ -38,7 +38,7 @@ public class log_in_controller implements Initializable {
         String email = take_email.getText();
         String password = take_password.getText();
         String type = user_type.getValue();
-        users_sql st = new users_sql();
+        user_sql st = new user_sql();
         boolean flag = st.check_user(email,password,type);
         if(flag) {
             current_user.get_user().clear_email();

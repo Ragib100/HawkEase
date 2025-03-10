@@ -3,11 +3,11 @@ package me.hawkease;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class requests_sql {
+public class request_sql {
 
     private Connection con;
 
-    public requests_sql() {
+    public request_sql() {
         try{
             con = database_connection.get_connection().sql_connection();
         } catch (Exception e) {

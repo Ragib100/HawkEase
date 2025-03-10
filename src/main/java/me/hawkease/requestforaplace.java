@@ -27,7 +27,7 @@ public class requestforaplace implements map_controller {
         try {
             loc = new HashMap<>();
             mapviewer mapViewer = new mapviewer(this);
-            location_sql sql = new location_sql();
+            locations_sql sql = new locations_sql();
             locations = sql.getLocations();
             for (location_info location : locations) {
                 loc.put(new location_info(location.getLatitude(), location.getLongitude()),true);
@@ -68,13 +68,13 @@ public class requestforaplace implements map_controller {
             }
 
             if (locationText != null) {
-                location_sql sql = new location_sql();
+                locations_sql sql = new locations_sql();
                 if(!sql.check_location(selectedLat,selectedLon)) {
                     locationText.setText("Invalid location");
                     return;
                 }
 
-                requests_sql mysql = new requests_sql();
+                request_sql mysql = new request_sql();
                 if(mysql.request_location(selectedLat, selectedLon)) locationText.setText("Requesting stall successful");
                 else locationText.setText("Requesting stall failed");
             }

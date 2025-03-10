@@ -26,7 +26,7 @@ public class forgot_password_controller {
     void change_password(MouseEvent event) {
         if(enter_otp.getText().equals(otp)) {
             RadioButton radioButton = (RadioButton) Type.getSelectedToggle();
-            users_sql users = new users_sql();
+            user_sql users = new user_sql();
             users.change_password(email.getText(), pass.getText(), radioButton.getText());
         }
     }

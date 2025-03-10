@@ -2,10 +2,10 @@ package me.hawkease;
 
 import java.sql.*;
 
-public class users_sql {
+public class user_sql {
     private Connection con;
 
-    public users_sql() {
+    public user_sql() {
         try{
             con = database_connection.get_connection().sql_connection();
         } catch (Exception e) {

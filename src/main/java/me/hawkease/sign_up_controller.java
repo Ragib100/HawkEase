@@ -48,7 +48,7 @@ public class sign_up_controller implements Initializable {
     void sign_up(MouseEvent event) {
         if(take_otp.getText()!=null && otp.equals(take_otp.getText())) {
             try{
-                users_sql user = new users_sql();
+                user_sql user = new user_sql();
                 user.insert_user(username,password,email,user_type);
                 fxml_loader fxmlLoader = new fxml_loader(event);
                 fxmlLoader.load_fxml("log_in.fxml");
