@@ -84,7 +84,7 @@ public class pendingReq implements Initializable {
 
     // Load sample data for testing
     private void loadSampleData() {
-        requests_sql sql = new requests_sql();
+        request_sql sql = new request_sql();
         emailLocations = sql.get_requests();
         Collections.sort(emailLocations);
         pendingRequests.addAll(emailLocations);
@@ -120,7 +120,7 @@ public class pendingReq implements Initializable {
             location_requests request = pendingRequests.get(index);
             System.out.println("Rejected request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
             
-            requests_sql sql = new requests_sql();
+            request_sql sql = new request_sql();
             sql.delete_request(request.email(), request.lat(), request.lon());
             
             pendingRequests.remove(index);

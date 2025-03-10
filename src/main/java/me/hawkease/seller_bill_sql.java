@@ -6,10 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class bills_from_seller_sql {
+public class seller_bill_sql {
     private Connection con;
 
-    public bills_from_seller_sql() {
+    public seller_bill_sql() {
         try{
             con = database_connection.get_connection().sql_connection();
         } catch (Exception e) {

@@ -173,7 +173,7 @@ public class bills_from_seller_controller implements Initializable {
         System.out.println("Processing transaction: " + transactionId +
                 " for location [" + location.getLatitude() + ", " +
                 location.getLongitude() + "]");
-        bills_from_seller_sql bills_from_seller_sql = new bills_from_seller_sql();
+        seller_bill_sql bills_from_seller_sql = new seller_bill_sql();
         if(bills_from_seller_sql.insert(current_user.get_user().get_email(), transactionId, location.getLatitude(), location.getLongitude())){
             System.out.println("Bill processed successfully");
         }

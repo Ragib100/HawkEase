@@ -30,7 +30,7 @@ public class allocatestallrent implements map_controller {
         try {
             loc = new HashMap<>();
             mapViewer = new mapviewer(this);
-            location_sql sql = new location_sql();
+            locations_sql sql = new locations_sql();
             ArrayList<location_info> locations = sql.getLocations();
             for (location_info Location : locations) {
                 loc.put(new location_info(Location.getLatitude(), Location.getLongitude()),true);
@@ -55,7 +55,7 @@ public class allocatestallrent implements map_controller {
                 massage.setText("Location Can not be deleted");
             }
             else {
-                location_sql sql = new location_sql();
+                locations_sql sql = new locations_sql();
                 if(sql.delete_location(selectedLat, selectedLon)){
                     massage.setText("Location has been deleted");
                     loc.remove(checkLocation);
@@ -95,7 +95,7 @@ public class allocatestallrent implements map_controller {
                 return;
             }
 
-            location_sql loc_sql = new location_sql();
+            locations_sql loc_sql = new locations_sql();
             if(loc_sql.check_location(selectedLat, selectedLon) && loc_sql.update_location(selectedLat,selectedLon,rent_amount.getText())) massage.setText("Rent updated successfully");
             else if(loc_sql.insert_location(selectedLat, selectedLon, rent_amount.getText())){
                 massage.setText("New stall allocated successfully");

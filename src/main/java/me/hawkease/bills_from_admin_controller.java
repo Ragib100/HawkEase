@@ -21,7 +21,7 @@ public class bills_from_admin_controller {
 
     @FXML
     void enter_bill(MouseEvent event) {
-        bills_from_admin_sql trans = new bills_from_admin_sql();
+        admin_bill_sql trans = new admin_bill_sql();
         if(trans.insert(tranx_id.getText(),amount.getText())) massage.setText("Bill Inserted Successfully");
         else massage.setText("Bill Insertion Failed");
     }
@@ -30,8 +30,8 @@ public class bills_from_admin_controller {
     void process_bills(MouseEvent event) {
         try {
             // Create database handler instances outside the loop for reuse
-            bills_from_admin_sql billsFromAdminSQL = new bills_from_admin_sql();
-            bills_from_seller_sql billsFromSellerSQL = new bills_from_seller_sql();
+            admin_bill_sql billsFromAdminSQL = new admin_bill_sql();
+            seller_bill_sql billsFromSellerSQL = new seller_bill_sql();
             rent_to_be_paid_sql rentToBePaidSQL = new rent_to_be_paid_sql();
 
             // Get all bills from admin database
