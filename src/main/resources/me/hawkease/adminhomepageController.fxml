@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.admin_homepage_controller">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.admin_homepage_controller">
     <top>
-        <BorderPane prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
+        <BorderPane prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #CCCCCC; -fx-border-width: 0 0 1 0;">
             <center>
                 <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Admin Panel" />
             </center>
@@ -23,24 +20,29 @@
         </BorderPane>
     </top>
     <left>
-        <VBox prefHeight="550.0" prefWidth="184.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+        <VBox prefHeight="530.0" prefWidth="160.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="My Profile">
+                <Button mnemonicParsing="false" onMouseClicked="#open_profile" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="My Profile">
                     <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#stalls" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="Stalls">
+                <Button mnemonicParsing="false" onMouseClicked="#stalls" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Stalls">
                     <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="Pending Request">
+                <Button mnemonicParsing="false" onMouseClicked="#pending_req" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Pending Request">
                     <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" styleClass="menu-button" text="Review">
+                <Button mnemonicParsing="false" onMouseClicked="#check_bills" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Bills">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onMouseClicked="#reports_analytics" prefHeight="50.0" prefWidth="240.0" style="-fx-background-color: #FF7F50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-cursor: hand;" text="Review">
                     <VBox.margin>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                     </VBox.margin>
@@ -49,6 +51,6 @@
         </VBox>
     </left>
     <center>
-        <StackPane fx:id="contentArea" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+        <StackPane fx:id="page" prefHeight="550.0" prefWidth="560.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>

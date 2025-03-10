@@ -124,5 +124,4 @@ public class location_sql {
         return locations;
     }
 
-
 }

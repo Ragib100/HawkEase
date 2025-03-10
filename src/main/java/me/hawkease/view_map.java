@@ -1,29 +1,18 @@
 package me.hawkease;
 
 import javafx.embed.swing.SwingNode;
-import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.viewer.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.*;
 
 public class view_map {
     private JXMapViewer mapViewer;
     private int current_zoom = 5;
-    private Point previous_point;
-    private DefaultWaypoint current_waypoint;
-    private Set<Waypoint> waypoints = new HashSet<>();
-    private WaypointPainter<Waypoint> waypointPainter;
     private BorderPane maproot;
     private final map_controller controller;
-    private ArrayList<location_info> locations;
-    private static final double radius = 100;
-    private location_info highlighted_location;
 
     public view_map(map_controller controller) {
         this.controller = controller;

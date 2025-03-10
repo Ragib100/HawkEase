@@ -59,6 +59,28 @@ public class shop_keepers_sql {
         return locations;
     }
 
+    public ArrayList<location_info> getLocations(String email) {
+        ArrayList<location_info> locations = new ArrayList<>();
+
+        String query = "SELECT latitude, longitude FROM shop_keepers WHERE email = ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                double latitude = rs.getDouble("latitude");
+                double longitude = rs.getDouble("longitude");
+                locations.add(new location_info(latitude, longitude));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving locations: " + e.getMessage());
+        }
+
+        return locations;
+    }
+
     public boolean is_under_3(String email) {
         String query = "SELECT COUNT(email) AS count FROM shop_keepers WHERE email = ?";
         try(PreparedStatement stmt = con.prepareStatement(query)){

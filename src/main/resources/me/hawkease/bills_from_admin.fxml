@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.bills_from_admin_controller">
+   <top>
+      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Insert Bills">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="320.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="tranx_id" maxHeight="25.0" maxWidth="200.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter the transaction id">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="amount" layoutX="210.0" layoutY="144.0" maxHeight="25.0" maxWidth="200.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter the bill amount">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onMouseClicked="#enter_bill" text="Submit">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></Button>
+            <Text fx:id="massage" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="194.13671493530273" />
+            <Button layoutX="284.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#process_bills" text="Process the bills" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

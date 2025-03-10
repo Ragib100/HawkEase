@@ -2,6 +2,7 @@ package me.hawkease;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -13,14 +14,15 @@ public class admin_homepage_controller {
     private StackPane page;
 
     @FXML
-    void stalls(MouseEvent event){
+    void stalls(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("allocatestallrent.fxml"));
+            Node newContent = fxmlLoader.load();
             page.getChildren().clear();
-            page.getChildren().add(fxmlLoader.load());
+            page.getChildren().add(newContent);
         }
-        catch (IOException e){
-            System.out.println("Error in loading fxml");
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
         }
     }
 
@@ -28,11 +30,12 @@ public class admin_homepage_controller {
     void pending_req(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pendingreq.fxml"));
+            Node newContent = fxmlLoader.load();
             page.getChildren().clear();
-            page.getChildren().add(fxmlLoader.load());
+            page.getChildren().add(newContent);
         }
         catch (IOException e){
-            System.out.println("Error in loading fxml");
+            System.out.println("Error in loading fxml: " + e.getMessage());
         }
     }
 
@@ -40,11 +43,12 @@ public class admin_homepage_controller {
     void reports_analytics(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reports_analytics.fxml"));
+            Node newContent = fxmlLoader.load();
             page.getChildren().clear();
-            page.getChildren().add(fxmlLoader.load());
+            page.getChildren().add(newContent);
         }
-        catch (IOException e){
-            System.out.println("Error in loading fxml");
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
         }
     }
 
@@ -61,7 +65,27 @@ public class admin_homepage_controller {
 
     @FXML
     void open_profile(MouseEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile.fxml"));
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
+        }
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
     }
 
+    @FXML
+    void check_bills(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bills_from_admin.fxml"));
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
+        }
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
+    }
 }

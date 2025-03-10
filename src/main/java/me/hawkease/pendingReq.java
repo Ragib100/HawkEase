@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
@@ -91,64 +90,76 @@ public class pendingReq implements Initializable {
         pendingRequests.addAll(emailLocations);
     }
 
-    // Handle accept button click
     private void handleAccept(int index) {
         if (index >= 0 && index < pendingRequests.size()) {
             location_requests request = pendingRequests.get(index);
+            
             System.out.println("Accepted request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
+            
             shop_keepers_sql temp = new shop_keepers_sql();
             if(!temp.insert(request.email(), request.lat(), request.lon())) return;
+            
             location_requests cur_loc = emailLocations.get(index);
             co_ordinate flag = new co_ordinate(cur_loc.lat(), cur_loc.lon());
+            
+            rent_to_be_paid_sql rent_to_be_paid_sql = new rent_to_be_paid_sql();
+            rent_to_be_paid_sql.insert(request.email(), request.lat(), request.lon());
+            
             int lb = lower_bound(flag);
             int ub = upper_bound(flag);
             System.out.println(lb + " " + ub);
-            for(int i=ub; i>=lb; i--) handleReject(i);
-            emailLocations.subList(lb, ub).clear();
+            
+            for(int i=ub-1; i>=lb; i--) {
+                handleReject(i);
+            }
         }
     }
 
-    // Handle reject button click
     private void handleReject(int index) {
         if (index >= 0 && index < pendingRequests.size()) {
             location_requests request = pendingRequests.get(index);
             System.out.println("Rejected request from: " + request.email() + " (Lat: " + request.lat() + ", Lon: " + request.lon() + ")");
-
+            
             requests_sql sql = new requests_sql();
-            sql.delete_request(request.email(),request.lat(),request.lon());
-
+            sql.delete_request(request.email(), request.lat(), request.lon());
+            
             pendingRequests.remove(index);
+            if (index < emailLocations.size()) {
+                emailLocations.remove(index); 
+            }
         }
     }
 
     int lower_bound(co_ordinate flag) {
-        int l=0,h=emailLocations.size()-1,res=-1;
-        while(l<=h) {
-            int mid = l+(h-l>>1);
+        int l = 0, h = emailLocations.size()-1, res = emailLocations.size();
+        while(l <= h) {
+            int mid = l + ((h-l) >> 1);
             location_requests cur_loc = emailLocations.get(mid);
             co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
-            if(cur.is_less_than(flag)) l=mid+1;
-            else if(cur.is_equal(flag)){
-                res=mid;
-                h=mid-1;
+            if(cur.is_less_than(flag)) {
+                l = mid + 1;
+            } else {
+                // Element is >= flag
+                res = mid;
+                h = mid - 1;
             }
-            else h=mid-1;
         }
         return res;
     }
 
     int upper_bound(co_ordinate flag) {
-        int l=0,h=emailLocations.size()-1,res=-1;
-        while(l<=h) {
-            int mid = l+(h-l>>1);
+        int l = 0, h = emailLocations.size()-1, res = emailLocations.size();
+        while(l <= h) {
+            int mid = l + ((h-l) >> 1);
             location_requests cur_loc = emailLocations.get(mid);
             co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
-            if(cur.is_less_than(flag)) l=mid+1;
-            else if(cur.is_equal(flag)){
-                res=mid;
-                l=mid+1;
+            if(cur.is_less_than(flag) || cur.is_equal(flag)) {
+                l = mid + 1;
+            } else {
+                // Element is > flag
+                res = mid;
+                h = mid - 1;
             }
-            else h=mid-1;
         }
         return res;
     }

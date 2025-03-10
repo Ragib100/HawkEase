@@ -1,7 +1,10 @@
 package me.hawkease;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -23,30 +26,40 @@ public class seller_homepage_controller {
 
     @FXML
     void open_profile(MouseEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("profile.fxml"));
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
+        }
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
+        }
     }
 
     @FXML
     void pay_bill(MouseEvent event) {
-        try{
-            page.getChildren().clear();
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("paybill.fxml"));
-            page.getChildren().add(fxmlLoader.load());
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
         }
-        catch (Exception e){
-            System.out.println("Error in loading fxml");
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
         }
     }
 
     @FXML
     void request_for_a_place(MouseEvent event) {
-        try{
-            page.getChildren().clear();
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("requestforaplace.fxml"));
-            page.getChildren().add(fxmlLoader.load());
+            Node newContent = fxmlLoader.load();
+            page.getChildren().clear();
+            page.getChildren().add(newContent);
         }
-        catch (Exception e){
-            System.out.println("Error in loading fxml");
+        catch (IOException e) {
+            System.out.println("Error in loading fxml: " + e.getMessage());
         }
     }
 

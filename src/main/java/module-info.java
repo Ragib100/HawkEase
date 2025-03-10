@@ -12,6 +12,7 @@ module me.hawkease {
     requires firebase.admin;
     requires com.google.auth;
     requires jakarta.mail;
+    requires transitive javafx.graphics;
 
     opens me.hawkease to javafx.fxml, javafx.base;
     exports me.hawkease;
