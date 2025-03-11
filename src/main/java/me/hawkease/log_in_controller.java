@@ -75,12 +75,12 @@ public class log_in_controller implements Initializable {
 
     @FXML
     void not_a_user(MouseEvent event) {
-        try {
-            fxml_loader f = new fxml_loader(event);
-            f.load_fxml("sign_up.fxml");
+        try{
+            fxml_loader fxmlLoader = new fxml_loader(event);
+            fxmlLoader.load_fxml("sign_up.fxml");
         }
-        catch (IOException e){
-            System.out.println(e.getMessage());
+        catch(IOException e){
+            System.out.println("Try again");
         }
     }
 

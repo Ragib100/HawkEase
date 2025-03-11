@@ -1,156 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<BorderPane prefHeight="550.0" prefWidth="742.0" style="-fx-background-color: linear-gradient(to right, #7eb6c4, #ffffff);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sign_up_controller">
-
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.sign_up_controller">
+   <!-- Left side with background image -->
    <left>
-      <VBox alignment="CENTER" prefHeight="550.0" prefWidth="320.0" spacing="15.0" style="-fx-background-color: rgba(62, 151, 183, 0.3); -fx-background-radius: 0 20 20 0;" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
+      <StackPane prefHeight="600.0" prefWidth="450.0">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="600.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@attachments/Hawkease.jpg" />
+                  <Image url="@attachments/hawkease welcome.jpg" />
                </image>
-               <effect>
-                  <DropShadow />
-               </effect>
             </ImageView>
-
-            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="280.0" spacing="5.0">
+            <!-- Dark overlay for better text visibility -->
+            <Rectangle fill="#00000055" height="600.0" width="450.0" />
+            <!-- Branding elements -->
+            <VBox alignment="TOP_CENTER" maxWidth="350.0" spacing="15.0">
                <children>
-                  <Text fill="#000000" text="Welcome to">
+                  <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to">
                      <font>
                         <Font name="Segoe UI" size="22.0" />
                      </font>
                   </Text>
-                  <Text fill="#000000" text="HawkEase community">
+                  <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="HawkEase Community">
+                     <font>
+                        <Font name="Segoe UI Bold" size="32.0" />
+                     </font>
+                     <effect>
+                        <DropShadow color="#00000080" height="5.0" radius="2.0" width="5.0" />
+                     </effect>
+                  </Text>
+                  <Text fill="#ffffffcc" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Your one-stop solution for seamless collaboration and community engagement" textAlignment="CENTER" wrappingWidth="300.0">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </left>
+
+   <!-- Right side with form -->
+   <center>
+      <BorderPane prefHeight="600.0" prefWidth="450.0" style="-fx-background-color: #f8f9fa;">
+         <center>
+            <VBox alignment="CENTER" maxWidth="350.0" spacing="20.0">
+               <children>
+                  <Text fill="#2D3748" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Your Account">
                      <font>
                         <Font name="Segoe UI Bold" size="28.0" />
                      </font>
                   </Text>
-               </children>
-            </VBox>
 
-            <VBox alignment="CENTER_LEFT" prefWidth="280.0" spacing="10.0" style="-fx-background-color: rgba(255, 255, 255, 0.7); -fx-background-radius: 10;">
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
-               <children>
-                  <Text fill="#000000" text="Password Requirements:">
-                     <font>
-                        <Font name="Segoe UI Bold" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#000000" text="• At least 8 characters long" />
-                  <Text fill="#000000" text="• Include at least one uppercase letter" />
-                  <Text fill="#000000" text="• Include at least one lowercase letter" />
-                  <Text fill="#000000" text="• Include at least one number" />
-                  <Text fill="#000000" text="• Include at least one special character" />
-               </children>
-            </VBox>
-         </children>
-      </VBox>
-   </left>
+                  <VBox spacing="15.0">
+                     <children>
+                        <TextField fx:id="take_user_name" prefHeight="45.0" prefWidth="300.0" promptText="Username" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1;">
+                           <font>
+                              <Font name="Segoe UI" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </TextField>
 
-   <center>
-      <VBox alignment="CENTER" maxWidth="422.0" prefHeight="550.0" spacing="20.0">
-         <padding>
-            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-         </padding>
-         <children>
-            <Text fill="#000000" text="Create Your Account">
-               <font>
-                  <Font name="Segoe UI Bold" size="24.0" />
-               </font>
-            </Text>
+                        <TextField fx:id="take_email_address" prefHeight="45.0" prefWidth="300.0" promptText="Email address" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1;">
+                           <font>
+                              <Font name="Segoe UI" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </TextField>
 
-            <VBox spacing="5.0">
-               <children>
-                  <Label text="Username:">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="take_user_name" prefWidth="300.0" promptText="Enter your username" />
-                  <Label fx:id="username_error" textFill="RED" visible="false" />
-               </children>
-            </VBox>
+                        <PasswordField fx:id="take_password" prefHeight="45.0" prefWidth="300.0" promptText="Password" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1;">
+                           <font>
+                              <Font name="Segoe UI" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </PasswordField>
 
-            <VBox spacing="5.0">
-               <children>
-                  <Label text="Email address:">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="take_email_address" prefWidth="300.0" promptText="Enter your email address" />
-                  <Label fx:id="email_error" textFill="RED" visible="false" />
-               </children>
-            </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <PasswordField fx:id="take_password_again" prefHeight="45.0" prefWidth="300.0" promptText="Confirm Password" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1;">
+                                 <font>
+                                    <Font name="Segoe UI" size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </PasswordField>
+                              <TextFlow fx:id="password_same_message" prefHeight="45.0" prefWidth="45.0" />
+                           </children>
+                        </HBox>
 
-            <VBox spacing="5.0">
-               <children>
-                  <Label text="Password:">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="take_password" prefWidth="300.0" promptText="Enter your password" />
-                  <Label fx:id="password_error" textFill="RED" visible="false" />
-               </children>
-            </VBox>
+                        <TextFlow fx:id="password_strength_message" prefHeight="20.0" prefWidth="300.0" />
 
-            <VBox spacing="5.0">
-               <children>
-                  <Label text="Confirm Password:">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="take_password_again" prefWidth="300.0" promptText="Confirm your password" />
-               </children>
-            </VBox>
+                        <ComboBox fx:id="sign_up_type" prefHeight="45.0" prefWidth="300.0" promptText="User type" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1; -fx-font-family: 'Segoe UI'; -fx-font-size: 16px;">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </ComboBox>
 
-            <VBox spacing="5.0">
-               <children>
-                  <TextField fx:id="take_otp" prefWidth="300.0" promptText="Enter OTP" visible="false" />
-                  <Label fx:id="otp_error" textFill="RED" visible="false" />
-               </children>
-            </VBox>
+                        <TextField fx:id="take_otp" prefHeight="45.0" prefWidth="300.0" promptText="Enter OTP" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e8f0; -fx-border-width: 1;">
+                           <font>
+                              <Font name="Segoe UI" size="16.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </TextField>
+                     </children>
+                  </VBox>
 
-            <HBox alignment="CENTER" spacing="20.0">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-               <children>
-                  <Button onMouseClicked="#sign_up" style="-fx-background-color: #3e97b7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5;" text="Sign up">
-                     <font>
-                        <Font name="Segoe UI" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="send_otp_button" onMouseClicked="#send_otp" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 20; -fx-background-radius: 5;" text="Send OTP">
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#sign_up" prefHeight="45.0" prefWidth="145.0" style="-fx-cursor: hand; -fx-background-color: #4299e1; -fx-background-radius: 8; -fx-text-fill: white;" text="Sign up">
+                           <font>
+                              <Font name="Segoe UI Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <DropShadow color="#00000040" height="4.0" radius="1.5" width="4.0" />
+                           </effect>
+                        </Button>
+                        <Button mnemonicParsing="false" onMouseClicked="#send_otp" prefHeight="45.0" prefWidth="145.0" style="-fx-cursor: hand; -fx-background-color: #63b3ed; -fx-background-radius: 8; -fx-text-fill: white;" text="Send OTP">
+                           <font>
+                              <Font name="Segoe UI Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <DropShadow color="#00000040" height="4.0" radius="1.5" width="4.0" />
+                           </effect>
+                        </Button>
+                     </children>
+                  </HBox>
+
+                  <Button mnemonicParsing="false" onMouseClicked="#log_in_from_sign_up_page" prefHeight="30.0" prefWidth="220.0" style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-color: #4299e1; -fx-border-radius: 8; -fx-border-width: 1;" text="Already a member? Log in" textFill="#4299e1">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </Button>
                </children>
-            </HBox>
-
-            <HBox alignment="CENTER">
-               <children>
-                  <Hyperlink onMouseClicked="#log_in_from_sign_up_page" text="Already have an account? Sign in" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
+               <BorderPane.margin>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+      </BorderPane>
    </center>
-
 </BorderPane>

@@ -126,16 +126,11 @@
                         </Button>
                     </children>
                 </HBox>
-
-                <!-- Not a user link -->
-                <Hyperlink onMouseClicked="#not_a_user" text="Not a user? Sign up now" textAlignment="CENTER">
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Hyperlink>
+            <Button mnemonicParsing="false" onMouseClicked="#not_a_user" prefHeight="26.0" prefWidth="163.0" style="-fx-cursor: hand; -fx-background-color: #9fd4e0; -fx-background-radius: 5; -fx-font-weight: bold;" text="Not a user? Sign up now">
+               <effect>
+                  <DropShadow height="5.0" radius="2.0" width="5.0" />
+               </effect>
+            </Button>
 
                 <!-- Empty space -->
                 <VBox VBox.vgrow="ALWAYS" />

@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -28,7 +29,8 @@ public class ProfileController implements Initializable {
 
     @FXML private BorderPane mainLayout;
     @FXML private ImageView profileImageView;
-    @FXML private Label userTypeLabel;
+    @FXML private Circle profileImageBackground;
+    @FXML private Label nameLabel; // Reference to nameLabel from FXML
     @FXML private Button selectImageButton;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
@@ -74,6 +76,7 @@ public class ProfileController implements Initializable {
             profileImageView.setImage(defaultImage);
         } catch (Exception e) {
             System.out.println("Could not load default profile image: " + e.getMessage());
+            // Use a fallback method or leave blank
         }
 
         // Update UI based on user type
@@ -87,8 +90,8 @@ public class ProfileController implements Initializable {
      * Updates the user-specific part of the UI based on current user type
      */
     private void updateUserTypeSpecificUI() {
-        // Update user type label
-        userTypeLabel.setText("User Type: " + currentUserType.toString());
+        // Make the specific pane visible
+        specificInfoPane.setVisible(true);
 
         // Create specific fields grid
         specificGrid = new GridPane();
@@ -199,23 +202,44 @@ public class ProfileController implements Initializable {
         phoneField.setText("+1 (555) 123-4567");
         addressField.setText("123 Main Street, City");
 
+        // Update the nameLabel to match the name field
+        if (nameLabel != null) {
+            nameLabel.setText("John Doe");
+        }
+
         // Set user-specific fields based on type
         switch (currentUserType) {
             case ADMIN:
-                departmentField.setText("IT Department");
-                roleField.setText("System Administrator");
+                if (departmentField != null) {
+                    departmentField.setText("IT Department");
+                }
+                if (roleField != null) {
+                    roleField.setText("System Administrator");
+                }
                 break;
 
             case SELLER:
-                shopNameField.setText("John's Food Corner");
-                businessTypeCombo.setValue("Food");
-                licenseField.setText("LIC-12345-FOOD");
+                if (shopNameField != null) {
+                    shopNameField.setText("John's Food Corner");
+                }
+                if (businessTypeCombo != null) {
+                    businessTypeCombo.setValue("Food");
+                }
+                if (licenseField != null) {
+                    licenseField.setText("LIC-12345-FOOD");
+                }
                 break;
 
             case BUYER:
-                foodCheck.setSelected(true);
-                electronicsCheck.setSelected(true);
-                notificationsCombo.setValue("Important Only");
+                if (foodCheck != null) {
+                    foodCheck.setSelected(true);
+                }
+                if (electronicsCheck != null) {
+                    electronicsCheck.setSelected(true);
+                }
+                if (notificationsCombo != null) {
+                    notificationsCombo.setValue("Important Only");
+                }
                 break;
         }
     }
@@ -274,11 +298,17 @@ public class ProfileController implements Initializable {
         // User type specific validation
         switch (currentUserType) {
             case SELLER:
-                if (shopNameField.getText().isEmpty() || businessTypeCombo.getValue() == null) {
+                if (shopNameField != null && shopNameField.getText().isEmpty() ||
+                        businessTypeCombo != null && businessTypeCombo.getValue() == null) {
                     showAlert(Alert.AlertType.ERROR, "Error", "Shop name and business type are required for sellers.");
                     return;
                 }
                 break;
+        }
+
+        // Update nameLabel to match the name field
+        if (nameLabel != null) {
+            nameLabel.setText(nameField.getText());
         }
 
         // Save profile data
@@ -327,23 +357,43 @@ public class ProfileController implements Initializable {
         // Save user type specific data
         switch (currentUserType) {
             case ADMIN:
-                System.out.println("Department: " + departmentField.getText());
-                System.out.println("Role: " + roleField.getText());
+                if (departmentField != null) {
+                    System.out.println("Department: " + departmentField.getText());
+                }
+                if (roleField != null) {
+                    System.out.println("Role: " + roleField.getText());
+                }
                 break;
 
             case SELLER:
-                System.out.println("Shop Name: " + shopNameField.getText());
-                System.out.println("Business Type: " + businessTypeCombo.getValue());
-                System.out.println("License Number: " + licenseField.getText());
+                if (shopNameField != null) {
+                    System.out.println("Shop Name: " + shopNameField.getText());
+                }
+                if (businessTypeCombo != null) {
+                    System.out.println("Business Type: " + businessTypeCombo.getValue());
+                }
+                if (licenseField != null) {
+                    System.out.println("License Number: " + licenseField.getText());
+                }
                 break;
 
             case BUYER:
                 System.out.println("Preferred Categories:");
-                System.out.println("- Food: " + foodCheck.isSelected());
-                System.out.println("- Clothing: " + clothingCheck.isSelected());
-                System.out.println("- Electronics: " + electronicsCheck.isSelected());
-                System.out.println("- Crafts: " + craftsCheck.isSelected());
-                System.out.println("Notifications: " + notificationsCombo.getValue());
+                if (foodCheck != null) {
+                    System.out.println("- Food: " + foodCheck.isSelected());
+                }
+                if (clothingCheck != null) {
+                    System.out.println("- Clothing: " + clothingCheck.isSelected());
+                }
+                if (electronicsCheck != null) {
+                    System.out.println("- Electronics: " + electronicsCheck.isSelected());
+                }
+                if (craftsCheck != null) {
+                    System.out.println("- Crafts: " + craftsCheck.isSelected());
+                }
+                if (notificationsCombo != null) {
+                    System.out.println("Notifications: " + notificationsCombo.getValue());
+                }
                 break;
         }
     }
