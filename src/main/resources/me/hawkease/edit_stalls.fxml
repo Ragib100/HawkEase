@@ -159,16 +159,6 @@
         <padding>
             <Insets bottom="8" left="15" right="15" top="8" />
         </padding>
-        <Text fill="#4a5568" text="Status:">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </Text>
-        <Text fill="#4a5568" text="Ready to allocate stalls. Select a location on the map.">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Text>
         <Region HBox.hgrow="ALWAYS" />
         <Text fill="#4a5568" text="HawkEase Stall Management System">
             <font>

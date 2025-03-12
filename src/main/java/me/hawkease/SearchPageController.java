@@ -77,14 +77,12 @@ public class SearchPageController implements Initializable {
             }
         });
 
-        // Set up category selection handler
         categoryComboBox.setOnAction(e -> {
             String selectedCategory = categoryComboBox.getValue();
             System.out.println("Category selected: " + selectedCategory);
             updateSearchResults(selectedCategory);
         });
 
-        // Initial search with default category
         updateSearchResults(categoryComboBox.getValue());
     }
 
@@ -98,11 +96,9 @@ public class SearchPageController implements Initializable {
         }
     }
 
-    // Search method to filter stalls by category
     private List<buyerhomepageController.Stall> searchStalls(String category) {
         List<buyerhomepageController.Stall> results = new ArrayList<>();
 
-        // Dummy stalls with products (same as original code)
         if (category.equals("All Categories") || category.equals("Food")) {
             buyerhomepageController.Stall foodStall = new buyerhomepageController.Stall("Fresh Foods Market", "John Smith", "Market Square", 4.7, 120);
             results.add(foodStall);
@@ -130,9 +126,8 @@ public class SearchPageController implements Initializable {
         return results;
     }
 
-    // Method to show rating dialog
     private void showRatingDialog(buyerhomepageController.Stall stall) {
-        // Create a new stage for the rating dialog
+
         Stage ratingStage = new Stage();
         ratingStage.setTitle("Rate " + stall.getName());
 
@@ -143,7 +138,6 @@ public class SearchPageController implements Initializable {
         Label titleLabel = new Label("Rate & Review " + stall.getName());
         titleLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        // Rating selection
         HBox ratingSelectionBox = new HBox(10);
         ratingSelectionBox.setAlignment(Pos.CENTER);
 
@@ -157,7 +151,6 @@ public class SearchPageController implements Initializable {
 
         ratingSelectionBox.getChildren().addAll(ratingLabel, ratingCombo);
 
-        // Comment area
         Label commentLabel = new Label("Your Review:");
 
         TextArea commentArea = new TextArea();
@@ -165,7 +158,6 @@ public class SearchPageController implements Initializable {
         commentArea.setPrefRowCount(5);
         commentArea.setWrapText(true);
 
-        // Submit and cancel buttons
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -176,12 +168,10 @@ public class SearchPageController implements Initializable {
 
         buttonBox.getChildren().addAll(submitButton, cancelButton);
 
-        // Add everything to the rating box
         ratingBox.getChildren().addAll(
                 titleLabel, ratingSelectionBox, commentLabel, commentArea, buttonBox
         );
 
-        // Set up button actions
         cancelButton.setOnAction(e -> ratingStage.close());
 
         submitButton.setOnAction(e -> {
@@ -193,13 +183,10 @@ public class SearchPageController implements Initializable {
                 return;
             }
 
-            // Extract numerical rating from selection
             int rating = Integer.parseInt(ratingValue.substring(0, 1));
 
-            // Submit rating
             submitRating(stall, rating, comment);
 
-            // Show confirmation
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Review Submitted");
             alert.setHeaderText(null);
@@ -214,7 +201,6 @@ public class SearchPageController implements Initializable {
         ratingStage.show();
     }
 
-    // Method to show stall details
     private void showStallDetails(buyerhomepageController.Stall stall) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Stall Details");
@@ -223,13 +209,11 @@ public class SearchPageController implements Initializable {
         alert.showAndWait();
     }
 
-    // Method to submit a rating
     private void submitRating(buyerhomepageController.Stall stall, int rating, String comment) {
         System.out.println("Rating submitted for " + stall.getName() + ": " + rating + " stars");
         System.out.println("Comment: " + comment);
     }
 
-    // Helper method to show error messages
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

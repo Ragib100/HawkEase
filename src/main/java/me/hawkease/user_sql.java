@@ -35,14 +35,17 @@ public class user_sql {
     }
 
     public boolean check_user(String email, String password,String type) {
-        String query = "SELECT * FROM users WHERE email = ? AND password = ? AND type = ?";
+        System.out.println(email + " " + password + " " + type);
+        String query = "SELECT name FROM users WHERE email = ? AND password = ? AND type = ?";
         try(PreparedStatement st = con.prepareStatement(query)){
             st.setString(1, email);
             st.setString(2, password);
             st.setString(3, type);
             ResultSet rs = st.executeQuery();
-            if(rs.next()) return true;
-            else return false;
+            if(rs.next()) {
+                System.out.println(rs.getString("name"));
+                return true;
+            }
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
@@ -50,7 +53,7 @@ public class user_sql {
         return false;
     }
 
-    public void change_password(String email, String password, String type) {
+    public boolean change_password(String email, String password, String type) {
         System.out.println(email + " " + password + " " + type);
         String query = "UPDATE users SET password = ? WHERE email = ? AND type = ?";
         try(PreparedStatement st = con.prepareStatement(query)){
@@ -64,9 +67,44 @@ public class user_sql {
             else {
                 System.out.println("Password change failed.");
             }
+            return rowsUpdated > 0;
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
         }
+        return false;
+    }
+
+    public info_for_profile get_user() {
+        String query = "SELECT * FROM users WHERE email = ?";
+        String email = current_user.get_user().get_email();
+        info_for_profile profile = null;
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                profile = new info_for_profile(rs.getString("Full_name"), email, rs.getString("number"));
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Failed to get user.");
+        }
+        return profile;
+    }
+
+    public boolean update_user(String full_name, String number) {
+        String query = "UPDATE users SET Full_name = ?, number = ? WHERE email = ?";
+        String email = current_user.get_user().get_email();
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1, full_name);
+            stmt.setString(2, number);
+            stmt.setString(3, email);
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        }
+        catch(SQLException e){
+            System.out.println("Failed to update user.");
+        }
+        return false;
     }
 }

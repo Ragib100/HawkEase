@@ -26,6 +26,7 @@ public class admin_bill_sql {
         }
         catch(Exception e) {
             System.out.println("SQL connection could not be established!");
+            make_alert.getInstance().make_alert("Error","Connection could not be established!");
         }
         return false;
     }
@@ -40,7 +41,7 @@ public class admin_bill_sql {
             }
         }
         catch(Exception e) {
-            System.out.println("SQL connection could not be established!");
+            make_alert.getInstance().make_alert("Error","Connection could not be established!");
         }
         return bills;
     }
@@ -50,7 +51,6 @@ public class admin_bill_sql {
         System.out.println("Delete Bill Successfully");
         try(PreparedStatement stmt = con.prepareStatement(query)){
             stmt.setString(1,bill);
-//            System.out.println("it is " + stmt.executeUpdate());
             int rowsAffected = stmt.executeUpdate();
             if(rowsAffected > 0) {
                 System.out.println("Bill deleted successfully");

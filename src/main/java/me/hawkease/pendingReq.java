@@ -30,35 +30,29 @@ public class pendingReq implements Initializable {
     @FXML
     private TableView<location_requests> tableView;
 
-    // Observable list to hold email requests
     private final ObservableList<location_requests> pendingRequests = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Configure name column to display email
         nameColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().email()+","+cellData.getValue().lat()+" "+cellData.getValue().lon())
         );
 
-        // Configure status column to display buttons
         statusColumn.setCellFactory(column -> new TableCell<>() {
             private final Button acceptButton = new Button("Accept");
             private final Button rejectButton = new Button("Reject");
-            private final HBox buttonContainer = new HBox(10); // 10 is the spacing between buttons
+            private final HBox buttonContainer = new HBox(10);
 
             {
-                // Style the buttons
                 acceptButton.getStyleClass().add("accept-button");
                 acceptButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
 
                 rejectButton.getStyleClass().add("reject-button");
                 rejectButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white;");
 
-                // on button actions
                 acceptButton.setOnAction(event -> handleAccept(getIndex()));
                 rejectButton.setOnAction(event -> handleReject(getIndex()));
 
-                // Configure container
                 buttonContainer.setAlignment(Pos.CENTER);
                 buttonContainer.getChildren().addAll(acceptButton, rejectButton);
             }
@@ -75,14 +69,11 @@ public class pendingReq implements Initializable {
             }
         });
 
-        // Load sample data
         loadSampleData();
 
-        // Set the items to the TableView
         tableView.setItems(pendingRequests);
     }
 
-    // Load sample data for testing
     private void loadSampleData() {
         request_sql sql = new request_sql();
         emailLocations = sql.get_requests();
@@ -138,8 +129,8 @@ public class pendingReq implements Initializable {
             co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
             if(cur.is_less_than(flag)) {
                 l = mid + 1;
-            } else {
-                // Element is >= flag
+            }
+            else {
                 res = mid;
                 h = mid - 1;
             }
@@ -155,8 +146,8 @@ public class pendingReq implements Initializable {
             co_ordinate cur = new co_ordinate(cur_loc.lat(), cur_loc.lon());
             if(cur.is_less_than(flag) || cur.is_equal(flag)) {
                 l = mid + 1;
-            } else {
-                // Element is > flag
+            }
+            else {
                 res = mid;
                 h = mid - 1;
             }

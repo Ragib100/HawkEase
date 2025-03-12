@@ -1,421 +1,199 @@
 package me.hawkease;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable {
+public class ProfileController extends sign_up_controller implements Initializable {
 
-    // Enum for different user types
-    public enum UserType {
-        ADMIN, SELLER, BUYER
-    }
+    @FXML
+    private PasswordField confirmPasswordField;
 
-    private UserType currentUserType = UserType.BUYER; // Default type
-    private File selectedImageFile;
+    @FXML
+    private TextFlow confirm_password_massage;
 
-    @FXML private BorderPane mainLayout;
-    @FXML private ImageView profileImageView;
-    @FXML private Circle profileImageBackground;
-    @FXML private Label nameLabel; // Reference to nameLabel from FXML
-    @FXML private Button selectImageButton;
-    @FXML private Button saveButton;
-    @FXML private Button cancelButton;
+    @FXML
+    private PasswordField currentPasswordField;
 
-    // Personal information fields
-    @FXML private TextField nameField;
-    @FXML private TextField emailField;
-    @FXML private TextField phoneField;
-    @FXML private TextField addressField;
+    @FXML
+    private Text emailField;
 
-    // Password fields
-    @FXML private PasswordField currentPasswordField;
-    @FXML private PasswordField newPasswordField;
-    @FXML private PasswordField confirmPasswordField;
+    @FXML
+    private BorderPane mainLayout;
 
-    // User specific pane to be populated dynamically
-    @FXML private TitledPane specificInfoPane;
+    @FXML
+    private TextField nameField;
 
-    // Fields for the dynamic content based on user type
-    private GridPane specificGrid;
+    @FXML
+    private Label nameLabel;
 
-    // Admin specific fields
-    private TextField departmentField;
-    private TextField roleField;
+    @FXML
+    private PasswordField newPasswordField;
 
-    // Seller specific fields
-    private TextField shopNameField;
-    private ComboBox<String> businessTypeCombo;
-    private TextField licenseField;
+    @FXML
+    private TextFlow new_password_massage;
 
-    // Buyer specific fields
-    private CheckBox foodCheck;
-    private CheckBox clothingCheck;
-    private CheckBox electronicsCheck;
-    private CheckBox craftsCheck;
-    private ComboBox<String> notificationsCombo;
+    @FXML
+    private TextField phoneField;
+
+    @FXML
+    private Circle profileImageBackground;
+
+    @FXML
+    private ImageView profileImageView;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Set up default profile image
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize UI components
+        new_password_massage.setStyle("-fx-font-family: 'Times New Roman'; -fx-font-size: 16px");
+        confirm_password_massage.setStyle("-fx-font-family: 'Times New Roman'; -fx-font-size: 16px");
+
+        // Setup listeners for password fields using parent class methods
+        newPasswordField.setOnKeyReleased(event -> {
+            // Use the existing methods from parent class
+            password_strength_message = new_password_massage;  // Redirect output to our TextFlow
+            take_password = newPasswordField;  // Set the field to validate
+            validate_password();  // Call parent's method
+        });
+
+        confirmPasswordField.setOnKeyReleased(event -> {
+            // Use the existing methods from parent class
+            password_same_message = confirm_password_massage;  // Redirect output to our TextFlow
+            take_password = newPasswordField;  // Set the source password field
+            take_password_again = confirmPasswordField;  // Set the confirmation field
+            validate_repeated_password();  // Call parent's method
+        });
+
+        // Add focus listeners to clear messages when fields lose focus
+        newPasswordField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {  // When focus is lost
+                new_password_massage.getChildren().clear();
+            }
+        });
+
+        confirmPasswordField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {  // When focus is lost
+                confirm_password_massage.getChildren().clear();
+            }
+        });
+
+        // Load user data
+        loadUserData();
+    }
+
+    private void loadUserData() {
+        // TODO: Load current user data from database
         try {
-            Image defaultImage = new Image(getClass().getResourceAsStream("/images/default_profile.png"));
-            profileImageView.setImage(defaultImage);
+            user_sql userSql = new user_sql();
+            info_for_profile info = userSql.get_user();
+            emailField.setText(info.email());
+            nameField.setText(info.name());
+            phoneField.setText(info.number());
+
+            // TODO: Load profile image if exists
         } catch (Exception e) {
-            System.out.println("Could not load default profile image: " + e.getMessage());
-            // Use a fallback method or leave blank
-        }
-
-        // Update UI based on user type
-        updateUserTypeSpecificUI();
-
-        // Load user profile data
-        loadProfileData();
-    }
-
-    /**
-     * Updates the user-specific part of the UI based on current user type
-     */
-    private void updateUserTypeSpecificUI() {
-        // Make the specific pane visible
-        specificInfoPane.setVisible(true);
-
-        // Create specific fields grid
-        specificGrid = new GridPane();
-        specificGrid.setVgap(10);
-        specificGrid.setHgap(10);
-        specificGrid.setPadding(new Insets(20));
-
-        // Reset the specific pane content
-        specificInfoPane.setContent(specificGrid);
-
-        switch (currentUserType) {
-            case ADMIN:
-                createAdminSpecificFields();
-                break;
-
-            case SELLER:
-                createSellerSpecificFields();
-                break;
-
-            case BUYER:
-                createBuyerSpecificFields();
-                break;
+            System.out.println("Error loading user data: " + e.getMessage());
         }
     }
 
-    /**
-     * Creates admin-specific fields
-     */
-    private void createAdminSpecificFields() {
-        specificInfoPane.setText("Admin Information");
-
-        Label departmentLabel = new Label("Department:");
-        departmentField = new TextField();
-        departmentField.setPromptText("Enter department");
-
-        Label roleLabel = new Label("Role:");
-        roleField = new TextField();
-        roleField.setPromptText("Enter role");
-
-        specificGrid.add(departmentLabel, 0, 0);
-        specificGrid.add(departmentField, 1, 0);
-        specificGrid.add(roleLabel, 0, 1);
-        specificGrid.add(roleField, 1, 1);
-    }
-
-    /**
-     * Creates seller-specific fields
-     */
-    private void createSellerSpecificFields() {
-        specificInfoPane.setText("Seller Information");
-
-        Label shopNameLabel = new Label("Shop Name:");
-        shopNameField = new TextField();
-        shopNameField.setPromptText("Enter shop name");
-
-        Label businessTypeLabel = new Label("Business Type:");
-        businessTypeCombo = new ComboBox<>();
-        businessTypeCombo.getItems().addAll("Food", "Clothing", "Electronics", "Crafts", "Other");
-
-        Label licenseLabel = new Label("License Number:");
-        licenseField = new TextField();
-        licenseField.setPromptText("Enter license number");
-
-        specificGrid.add(shopNameLabel, 0, 0);
-        specificGrid.add(shopNameField, 1, 0);
-        specificGrid.add(businessTypeLabel, 0, 1);
-        specificGrid.add(businessTypeCombo, 1, 1);
-        specificGrid.add(licenseLabel, 0, 2);
-        specificGrid.add(licenseField, 1, 2);
-    }
-
-    /**
-     * Creates buyer-specific fields
-     */
-    private void createBuyerSpecificFields() {
-        specificInfoPane.setText("Buyer Preferences");
-
-        Label preferredCategoriesLabel = new Label("Preferred Categories:");
-
-        VBox categoriesBox = new VBox(5);
-        foodCheck = new CheckBox("Food");
-        clothingCheck = new CheckBox("Clothing");
-        electronicsCheck = new CheckBox("Electronics");
-        craftsCheck = new CheckBox("Crafts");
-        categoriesBox.getChildren().addAll(foodCheck, clothingCheck, electronicsCheck, craftsCheck);
-
-        Label notificationsLabel = new Label("Notifications:");
-        notificationsCombo = new ComboBox<>();
-        notificationsCombo.getItems().addAll("All", "Important Only", "None");
-        notificationsCombo.setValue("All");
-
-        specificGrid.add(preferredCategoriesLabel, 0, 0);
-        specificGrid.add(categoriesBox, 1, 0);
-        specificGrid.add(notificationsLabel, 0, 1);
-        specificGrid.add(notificationsCombo, 1, 1);
-    }
-
-    /**
-     * Loads profile data from database or other storage
-     */
-    private void loadProfileData() {
-        // TODO: This would connect to your database or storage to fetch user profile data
-        // For demo purposes, we'll just set some sample data
-
-        // Set common fields
-        nameField.setText("John Doe");
-        emailField.setText("john.doe@example.com");
-        phoneField.setText("+1 (555) 123-4567");
-        addressField.setText("123 Main Street, City");
-
-        // Update the nameLabel to match the name field
-        if (nameLabel != null) {
-            nameLabel.setText("John Doe");
-        }
-
-        // Set user-specific fields based on type
-        switch (currentUserType) {
-            case ADMIN:
-                if (departmentField != null) {
-                    departmentField.setText("IT Department");
-                }
-                if (roleField != null) {
-                    roleField.setText("System Administrator");
-                }
-                break;
-
-            case SELLER:
-                if (shopNameField != null) {
-                    shopNameField.setText("John's Food Corner");
-                }
-                if (businessTypeCombo != null) {
-                    businessTypeCombo.setValue("Food");
-                }
-                if (licenseField != null) {
-                    licenseField.setText("LIC-12345-FOOD");
-                }
-                break;
-
-            case BUYER:
-                if (foodCheck != null) {
-                    foodCheck.setSelected(true);
-                }
-                if (electronicsCheck != null) {
-                    electronicsCheck.setSelected(true);
-                }
-                if (notificationsCombo != null) {
-                    notificationsCombo.setValue("Important Only");
-                }
-                break;
-        }
-    }
-
-    /**
-     * Handle profile image selection
-     */
     @FXML
-    private void handleSelectImage(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
-        selectedImageFile = fileChooser.showOpenDialog(mainLayout.getScene().getWindow());
+    void handleSave(MouseEvent event) {
+        String name = nameField.getText();
+        String phone = phoneField.getText();
+        String currentPassword = currentPasswordField.getText();
+        String newPassword = newPasswordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
 
-        if (selectedImageFile != null) {
-            try {
-                Image selectedImage = new Image(selectedImageFile.toURI().toString());
-                profileImageView.setImage(selectedImage);
+        if (!newPassword.isEmpty()) {
+
+            boolean isCurrentPasswordValid = verifyCurrentPassword(currentPassword);
+
+            if (!isCurrentPasswordValid) {
+                showAlert("Error", "Current password is incorrect.");
+                return;
+            }
+
+            if (!valid_password(newPassword)) {
+                showAlert("Error", "New password does not meet the requirements.");
+                return;
+            }
+
+            if (!newPassword.equals(confirmPassword)) {
+                showAlert("Error", "New passwords do not match.");
+                return;
+            }
+
+            try{
+                user_sql userSql = new user_sql();
+                if(userSql.change_password(current_user.get_user().get_email(), newPassword,current_user.get_user().get_type())) showAlert("Success", "Password changed.");
+                else showAlert("Error", "Passwords do not match.");
             } catch (Exception e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Could not load the selected image.");
+                System.out.println("Error changing password: ");
             }
+        }
+
+        try {
+            user_sql userSql = new user_sql();
+            if(userSql.update_user(name,phone)) showAlert("Success", "Profile updated successfully.");
+            else showAlert("Error", "Profile update failed.");
+
+            loadUserData();
+        } catch (Exception e) {
+            showAlert("Error", "Failed to update profile: " + e.getMessage());
         }
     }
 
-    /**
-     * Handle saving profile changes
-     */
+    private boolean verifyCurrentPassword(String currentPassword) {
+        try {
+            user_sql userSql = new user_sql();
+            return userSql.check_user(current_user.get_user().get_email(), currentPassword,current_user.get_user().get_type());
+        } catch (Exception e) {
+            System.out.println("Error verifying password: " + e.getMessage());
+            return false;
+        }
+    }
+
     @FXML
-    private void handleSave(ActionEvent event) {
-        // Validation
-        if (nameField.getText().isEmpty() || emailField.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Name and email are required fields.");
-            return;
-        }
+    void handleSelectImage(MouseEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Profile Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
 
-        // Password validation
-        if (!newPasswordField.getText().isEmpty()) {
-            if (currentPasswordField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Please enter your current password.");
-                return;
-            }
+        File selectedFile = fileChooser.showOpenDialog(mainLayout.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                Image image = new Image(selectedFile.toURI().toString());
+                profileImageView.setImage(image);
 
-            if (!newPasswordField.getText().equals(confirmPasswordField.getText())) {
-                showAlert(Alert.AlertType.ERROR, "Error", "New password and confirmation do not match.");
-                return;
-            }
-
-            // Verify the current password
-            if (!verifyCurrentPassword(currentPasswordField.getText())) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Current password is incorrect.");
-                return;
+                // TODO: Save the image path to the database
+            } catch (Exception e) {
+                showAlert("Error", "Failed to load image: " + e.getMessage());
             }
         }
-
-        // User type specific validation
-        switch (currentUserType) {
-            case SELLER:
-                if (shopNameField != null && shopNameField.getText().isEmpty() ||
-                        businessTypeCombo != null && businessTypeCombo.getValue() == null) {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Shop name and business type are required for sellers.");
-                    return;
-                }
-                break;
-        }
-
-        // Update nameLabel to match the name field
-        if (nameLabel != null) {
-            nameLabel.setText(nameField.getText());
-        }
-
-        // Save profile data
-        saveProfileData();
-
-        showAlert(Alert.AlertType.INFORMATION, "Success", "Profile updated successfully!");
     }
 
-    /**
-     * Handle cancel button action
-     */
-    @FXML
-    private void handleCancel(ActionEvent event) {
-        // Get the stage and close it
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Verify the current password against stored password
-     * @param password The current password to verify
-     * @return True if password is correct, false otherwise
-     */
-    private boolean verifyCurrentPassword(String password) {
-        // TODO: This would connect to your authentication system
-        // For demo purposes, always return true
-        return true;
-    }
-
-    /**
-     * Save profile data to storage
-     */
-    private void saveProfileData() {
-        // TODO: This method would save the data to your database
-        // For this example, we'll just print the data
-        System.out.println("Saving profile data for user type: " + currentUserType);
-        System.out.println("Name: " + nameField.getText());
-        System.out.println("Email: " + emailField.getText());
-        System.out.println("Phone: " + phoneField.getText());
-        System.out.println("Address: " + addressField.getText());
-
-        if (selectedImageFile != null) {
-            System.out.println("New profile image: " + selectedImageFile.getAbsolutePath());
-        }
-
-        // Save user type specific data
-        switch (currentUserType) {
-            case ADMIN:
-                if (departmentField != null) {
-                    System.out.println("Department: " + departmentField.getText());
-                }
-                if (roleField != null) {
-                    System.out.println("Role: " + roleField.getText());
-                }
-                break;
-
-            case SELLER:
-                if (shopNameField != null) {
-                    System.out.println("Shop Name: " + shopNameField.getText());
-                }
-                if (businessTypeCombo != null) {
-                    System.out.println("Business Type: " + businessTypeCombo.getValue());
-                }
-                if (licenseField != null) {
-                    System.out.println("License Number: " + licenseField.getText());
-                }
-                break;
-
-            case BUYER:
-                System.out.println("Preferred Categories:");
-                if (foodCheck != null) {
-                    System.out.println("- Food: " + foodCheck.isSelected());
-                }
-                if (clothingCheck != null) {
-                    System.out.println("- Clothing: " + clothingCheck.isSelected());
-                }
-                if (electronicsCheck != null) {
-                    System.out.println("- Electronics: " + electronicsCheck.isSelected());
-                }
-                if (craftsCheck != null) {
-                    System.out.println("- Crafts: " + craftsCheck.isSelected());
-                }
-                if (notificationsCombo != null) {
-                    System.out.println("Notifications: " + notificationsCombo.getValue());
-                }
-                break;
-        }
-    }
-
-    /**
-     * Show an alert dialog
-     */
-    private void showAlert(Alert.AlertType alertType, String title, String content) {
-        Alert alert = new Alert(alertType);
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(content);
+        alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    /**
-     * Set the user type and update the UI accordingly
-     * @param userType The user type to set
-     */
-    public void setUserType(UserType userType) {
-        this.currentUserType = userType;
-        updateUserTypeSpecificUI();
-        loadProfileData();
     }
 }

@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" alignment="CENTER" prefWidth="300" prefHeight="200" 
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="me.hawkease.edit_popup_stall_controller">
-   <padding>
-      <Insets top="20" right="20" bottom="20" left="20" />
-   </padding>
-   <children>
-      <GridPane hgap="10" vgap="10">
+<StackPane style="-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 900;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.edit_popup_stall_controller">
+
+   <!-- Card-like popup -->
+   <VBox alignment="CENTER" prefHeight="250" prefWidth="350" spacing="15" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);">
+
+      <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Edit Stall Details" />
+
+      <GridPane hgap="10" style="-fx-padding: 10;" vgap="10">
          <children>
-            <Label text="Shop Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-            <TextField fx:id="shopNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
-            
-            <Label text="Shop Address:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-            <TextField fx:id="shopAddressField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
-            
-            <Label text="Category:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-            <ComboBox fx:id="categoryComboBox" prefWidth="150" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            <Label text="Shop Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="shopNameField" style="-fx-pref-width: 180px; -fx-background-radius: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Shop Address:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="shopAddressField" style="-fx-pref-width: 180px; -fx-background-radius: 8;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ComboBox fx:id="categoryComboBox" style="-fx-pref-width: 180px; -fx-background-radius: 8;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
       </GridPane>
-      
-      <Button fx:id="submitButton" text="Submit" onAction="#handleSubmit" />
-   </children>
-</VBox>
+
+      <Button onMouseClicked="#handleSubmit" style="-fx-background-color: #0078D7; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8 20;" text="Submit" />
+
+   </VBox>
+</StackPane>

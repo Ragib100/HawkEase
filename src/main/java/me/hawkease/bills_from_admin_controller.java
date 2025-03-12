@@ -29,32 +29,26 @@ public class bills_from_admin_controller {
     @FXML
     void process_bills(MouseEvent event) {
         try {
-            // Create database handler instances outside the loop for reuse
             admin_bill_sql billsFromAdminSQL = new admin_bill_sql();
             seller_bill_sql billsFromSellerSQL = new seller_bill_sql();
             rent_to_be_paid_sql rentToBePaidSQL = new rent_to_be_paid_sql();
 
-            // Get all bills from admin database
             HashMap<String, Integer> bills = billsFromAdminSQL.get_bills();
             System.out.println("Total bills to process: " + bills.size());
 
             int successCount = 0;
             int failCount = 0;
 
-            // Process each bill
             for (String billId : bills.keySet()) {
                 System.out.println("Processing bill: " + billId);
 
                 try {
-                    // Check if bill exists in seller database and can be deleted from admin
                     if (billsFromSellerSQL.check(billId) && billsFromAdminSQL.delete_bill(billId)) {
                         System.out.println(billId + " - Bill deleted successfully from admin database");
 
-                        // Get location information and rent amount
                         Pair<String, location_info> info = billsFromSellerSQL.get_location(billId);
                         int rent = bills.get(billId);
 
-                        // Update the rent to be paid database and delete from seller database
                         String sellerId = info.getKey();
                         location_info location = info.getValue();
 
@@ -85,14 +79,8 @@ public class bills_from_admin_controller {
             }
 
         } catch (Exception e) {
-            System.err.println("Error in bill processing: " + e.getMessage());
-            e.printStackTrace();
-            massage.setText("Error processing bills: " + e.getMessage());
-        } finally {
-            // Close resources if your SQL classes have close methods
-            // billsFromAdminSQL.close();
-            // billsFromSellerSQL.close();
-            // rentToBePaidSQL.close();
+
+            massage.setText("Error processing bills: ");
         }
     }
 

@@ -53,7 +53,7 @@ public class seller_bill_sql {
             stmt.setString(1, bill);
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) { // Use `if` instead of `while` since we expect one record
+            if (rs.next()) {
                 String email = rs.getString("email");
                 double latitude = rs.getDouble("latitude");
                 double longitude = rs.getDouble("longitude");
@@ -61,7 +61,7 @@ public class seller_bill_sql {
                 res = new Pair<>(email,location);
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Print the exception for debugging
+            e.printStackTrace();
         }
         return res;
     }

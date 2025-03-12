@@ -52,7 +52,6 @@ public class requestforaplace implements map_controller {
     void request(MouseEvent event) {
         System.out.println(selectedLat + " " + selectedLon);
         try {
-            // Validate input
             locationText.setText("Selected location: " + selectedLat + " " + selectedLon);
             if (selectedLat == -180 || selectedLon == -180) {
                 if (locationText != null) {
@@ -83,8 +82,7 @@ public class requestforaplace implements map_controller {
             selectedLon = -180;
 
         } catch (Exception e) {
-            System.err.println("Error requesting location: "+e.getMessage());
-            e.printStackTrace();
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 
@@ -96,8 +94,7 @@ public class requestforaplace implements map_controller {
             locationText.setText(String.format("Selected location: %.6f, %.6f", lat, lon));
         }
         catch(Exception e){
-            System.out.println(lat+","+lon+","+selectedLat+","+selectedLon);
-            System.out.println("Error setting location: ");
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 

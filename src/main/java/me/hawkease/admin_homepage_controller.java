@@ -22,7 +22,7 @@ public class admin_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: ");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -33,7 +33,7 @@ public class admin_homepage_controller {
             fxmlLoader.load_fxml("adminhomepageController.fxml");
         }
         catch (IOException e){
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -46,20 +46,7 @@ public class admin_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e){
-            System.out.println("Error in loading fxml: ");
-        }
-    }
-
-    @FXML
-    void reports_analytics(MouseEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reports_analytics.fxml"));
-            Node newContent = fxmlLoader.load();
-            page.getChildren().clear();
-            page.getChildren().add(newContent);
-        }
-        catch (IOException e) {
-            System.out.println("Error in loading fxml: ");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -70,7 +57,7 @@ public class admin_homepage_controller {
             fxmlLoader.load_fxml("log_in.fxml");
         }
         catch (IOException e){
-            System.out.println("Error in loading fxml");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -83,7 +70,7 @@ public class admin_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: ");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -96,7 +83,7 @@ public class admin_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: ");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 }

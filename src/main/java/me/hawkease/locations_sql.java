@@ -65,7 +65,6 @@ public class locations_sql {
     public boolean check_location(double lat, double lon) {
 
         String query = "SELECT * FROM allocated_locations WHERE latitude = ? AND longitude = ?";
-//        String query = "SELECT * FROM users WHERE email = ? AND password = ? AND type = ?";
         try(PreparedStatement stmt = con.prepareStatement(query)){
             stmt.setString(1, String.valueOf(lat));
             stmt.setString(2, String.valueOf(lon));

@@ -17,10 +17,10 @@ import java.util.ResourceBundle;
 public class sign_up_controller implements Initializable {
 
     @FXML
-    private TextFlow password_same_message;
+    public TextFlow password_same_message;
 
     @FXML
-    private TextFlow password_strength_message;
+    public TextFlow password_strength_message;
 
     @FXML
     private ComboBox<String> sign_up_type;
@@ -29,10 +29,10 @@ public class sign_up_controller implements Initializable {
     private TextField take_email_address;
 
     @FXML
-    private PasswordField take_password;
+    public PasswordField take_password;
 
     @FXML
-    private PasswordField take_password_again;
+    public PasswordField take_password_again;
 
     @FXML
     private TextField take_user_name;
@@ -52,7 +52,7 @@ public class sign_up_controller implements Initializable {
                 fxmlLoader.load_fxml("log_in.fxml");
             }
             catch(Exception e){
-                System.out.println("Try again");
+                make_alert.getInstance().make_alert("Error","Try again");
             }
         }
         else{
@@ -72,7 +72,7 @@ public class sign_up_controller implements Initializable {
             send.sendEmail(take_email_address.getText(),otp);
         }
         else {
-            System.out.println("Fill up everything correctly");
+            make_alert.getInstance().make_alert("Error","Fill up everything correctly");
         }
     }
 
@@ -83,7 +83,7 @@ public class sign_up_controller implements Initializable {
             f.load_fxml("log_in.fxml");
         }
         catch (IOException e) {
-            System.out.println(e.getMessage());
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 

@@ -43,7 +43,7 @@ public class allocatestallrent implements map_controller {
             mapViewer.setExistingLocations(loc);
             mapViewer.show();
         } catch (Exception e) {
-            System.err.println("Error opening map: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Map loading failed");
         }
     }
 
@@ -62,12 +62,9 @@ public class allocatestallrent implements map_controller {
                 }
                 else massage.setText("Location deletion failed");
             }
-
-//            System.out.println("Deleted location: " + selectedLat + ", " + selectedLon);
         }
         catch (Exception e) {
             massage.setText("Error deleting location: ");
-            System.err.println("Error deleting stall");
         }
     }
 
@@ -76,7 +73,6 @@ public class allocatestallrent implements map_controller {
         try {
             System.out.println(selectedLat + " " + selectedLon);
 
-            // Validate input
             if (selectedLat == -180 || selectedLon == -180) {
                 massage.setText("Please select a location first");
                 return;
@@ -87,7 +83,6 @@ public class allocatestallrent implements map_controller {
                 return;
             }
 
-            // Try to parse rent amount as a number
             try {
                 Double.parseDouble(rent_amount.getText());
             } catch (NumberFormatException e) {
@@ -103,7 +98,6 @@ public class allocatestallrent implements map_controller {
             }
             else massage.setText("Operation failed");
         } catch (Exception e) {
-            System.err.println("Error allocating rent: " + e.getMessage());
             massage.setText("Error in allocating stall");
         }
     }

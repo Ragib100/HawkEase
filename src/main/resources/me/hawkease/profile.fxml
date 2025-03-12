@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="mainLayout" prefHeight="700.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.ProfileController">
+<BorderPane fx:id="mainLayout" prefHeight="700.0" prefWidth="600.0" styleClass="main-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.hawkease.ProfileController">
     <padding>
         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
     </padding>
@@ -19,46 +33,53 @@
     </stylesheets>
 
     <top>
-        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="25.0" top="15.0" />
+                <Insets bottom="30.0" top="20.0" />
             </padding>
             <children>
                 <Label styleClass="title-label" text="My Profile">
                     <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="28.0" />
                     </font>
+                    <effect>
+                        <DropShadow color="#00000040" height="5.0" radius="2.0" width="5.0" />
+                    </effect>
                 </Label>
 
-                <HBox alignment="CENTER" spacing="30.0">
+                <HBox alignment="CENTER" spacing="35.0">
                     <children>
                         <StackPane>
                             <children>
-                                <Circle fx:id="profileImageBackground" radius="60.0" styleClass="profile-image-background" />
+                                <Circle fx:id="profileImageBackground" radius="65.0" styleClass="profile-image-background" />
                                 <StackPane styleClass="profile-image-container">
                                     <children>
-                                        <ImageView fx:id="profileImageView" fitHeight="110.0" fitWidth="110.0" preserveRatio="true" styleClass="profile-image" />
+                                        <ImageView fx:id="profileImageView" fitHeight="120.0" fitWidth="120.0" preserveRatio="true" styleClass="profile-image" />
                                     </children>
                                     <effect>
-                                        <DropShadow color="#00000060" height="10.0" radius="4.5" width="10.0" />
+                                        <DropShadow color="#00000060" height="12.0" radius="5.5" width="12.0" />
                                     </effect>
                                 </StackPane>
                             </children>
                         </StackPane>
 
-                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                        <VBox alignment="CENTER_LEFT" spacing="10.0">
                             <children>
                                 <Label fx:id="nameLabel" styleClass="user-name-label">
                                     <font>
-                                        <Font name="System Bold" size="20.0" />
+                                        <Font name="System Bold" size="22.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="selectImageButton" onAction="#handleSelectImage" styleClass="image-button" text="Change Profile Picture" />
+                                <Button onMouseClicked="#handleSelectImage" styleClass="image-button" text="Change Profile Picture">
+                                    <effect>
+                                        <DropShadow color="#00000030" height="5.0" radius="2.0" width="5.0" />
+                                    </effect>
+                                </Button>
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="15.0" top="15.0" />
                     </padding>
                 </HBox>
             </children>
@@ -68,9 +89,9 @@
     <center>
         <ScrollPane fitToWidth="true" pannable="true" styleClass="profile-scroll-pane">
             <content>
-                <VBox spacing="15.0">
+                <VBox spacing="20.0">
                     <padding>
-                        <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                        <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
                     </padding>
                     <children>
                         <TitledPane animated="true" styleClass="profile-pane" text="Personal Information">
@@ -78,32 +99,32 @@
                                 <Region styleClass="person-icon" />
                             </graphic>
                             <content>
-                                <GridPane hgap="15.0" styleClass="form-grid" vgap="15.0">
+                                <GridPane hgap="20.0" styleClass="form-grid" vgap="20.0">
                                     <padding>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                                     </padding>
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="300.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Label styleClass="field-label" text="Full Name:" />
                                         <TextField fx:id="nameField" promptText="Enter your full name" styleClass="profile-field" GridPane.columnIndex="1" />
                                         <Label styleClass="field-label" text="Email:" GridPane.rowIndex="1" />
-                                        <TextField fx:id="emailField" promptText="Enter your email" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <Label styleClass="field-label" text="Phone:" GridPane.rowIndex="2" />
                                         <TextField fx:id="phoneField" promptText="Enter your phone number" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <Label styleClass="field-label" text="Address:" GridPane.rowIndex="3" />
-                                        <TextField fx:id="addressField" promptText="Enter your address" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Text fx:id="emailField" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="313.3368167877197" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
                             </content>
+                            <effect>
+                                <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
+                            </effect>
                         </TitledPane>
 
                         <TitledPane animated="true" styleClass="profile-pane" text="Change Password">
@@ -111,34 +132,46 @@
                                 <Region styleClass="lock-icon" />
                             </graphic>
                             <content>
-                                <GridPane hgap="15.0" styleClass="form-grid" vgap="15.0">
+                                <GridPane hgap="20.0" styleClass="form-grid" vgap="20.0">
                                     <padding>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                                     </padding>
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="300.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="35.0" prefHeight="45.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
                                         <Label styleClass="field-label" text="Current Password:" />
                                         <PasswordField fx:id="currentPasswordField" promptText="Enter current password" styleClass="profile-field" GridPane.columnIndex="1" />
+
                                         <Label styleClass="field-label" text="New Password:" GridPane.rowIndex="1" />
                                         <PasswordField fx:id="newPasswordField" promptText="Enter new password" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextFlow fx:id="new_password_massage" styleClass="validation-text" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <padding>
+                                                <Insets left="10.0" />
+                                            </padding>
+                                        </TextFlow>
+
                                         <Label styleClass="field-label" text="Confirm Password:" GridPane.rowIndex="2" />
                                         <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="profile-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextFlow fx:id="confirm_password_massage" styleClass="validation-text" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                            <padding>
+                                                <Insets left="10.0" />
+                                            </padding>
+                                        </TextFlow>
                                     </children>
                                 </GridPane>
                             </content>
+                            <effect>
+                                <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
+                            </effect>
                         </TitledPane>
-
-                        <!-- Placeholder for user type specific fields - will be populated dynamically -->
-                        <TitledPane fx:id="specificInfoPane" animated="true" disable="true" styleClass="profile-pane" text="User Specific Information" />
-
                     </children>
                 </VBox>
             </content>
@@ -146,13 +179,16 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="button-container" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" spacing="20.0" styleClass="button-container" BorderPane.alignment="CENTER">
             <padding>
                 <Insets top="25.0" />
             </padding>
             <children>
-                <Button fx:id="cancelButton" disable="true" onAction="#handleCancel" prefWidth="120.0" styleClass="cancel-button" text="Cancel" visible="false" />
-                <Button fx:id="saveButton" onAction="#handleSave" prefWidth="120.0" styleClass="save-button" text="Save Changes" />
+                <Button onMouseClicked="#handleSave" prefHeight="40.0" prefWidth="130.0" styleClass="save-button" text="Save Changes">
+                    <effect>
+                        <DropShadow color="#00000040" height="5.0" radius="2.0" width="5.0" />
+                    </effect>
+                </Button>
             </children>
         </HBox>
     </bottom>

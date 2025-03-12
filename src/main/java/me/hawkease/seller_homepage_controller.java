@@ -20,7 +20,7 @@ public class seller_homepage_controller {
             f.load_fxml("log_in.fxml");
         }
         catch (Exception e){
-            System.out.println("Error in loading fxml");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -31,7 +31,7 @@ public class seller_homepage_controller {
             fxmlLoader.load_fxml("sellerhomepageController.fxml");
         }
         catch (IOException e){
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -44,7 +44,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -57,7 +57,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -70,7 +70,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 
@@ -83,7 +83,7 @@ public class seller_homepage_controller {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading fxml: " + e.getMessage());
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 }

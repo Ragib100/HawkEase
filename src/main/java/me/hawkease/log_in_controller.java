@@ -3,6 +3,7 @@ package me.hawkease;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -29,7 +30,7 @@ public class log_in_controller implements Initializable {
             fxmlLoader.load_fxml("forgot_password_controller.fxml");
         }
         catch(IOException e){
-            System.out.println("Try again");
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 
@@ -40,36 +41,39 @@ public class log_in_controller implements Initializable {
         String type = user_type.getValue();
         user_sql st = new user_sql();
         boolean flag = st.check_user(email,password,type);
+//        make_alert.getInstance().make_alert("Success",""+flag);
         if(flag) {
             current_user.get_user().clear_email();
             current_user.get_user().set_email(email);
+            current_user.get_user().clear_type();
+            current_user.get_user().set_type(type);
             fxml_loader fxmlLoader = new fxml_loader(event);
             switch (type) {
                 case "Admin" -> {
                     try {
                         fxmlLoader.load_fxml("adminhomepageController.fxml");
                     } catch (IOException e) {
-                        System.out.println("Try again");
+                        make_alert.getInstance().make_alert("Error","Try again");
                     }
                 }
                 case "Buyer" -> {
                     try {
                         fxmlLoader.load_fxml("buyerhome.fxml");
                     } catch (IOException e) {
-                        System.out.println("Try again");
+                        make_alert.getInstance().make_alert("Error","Try again");
                     }
                 }
                 case "Seller" -> {
                     try {
                         fxmlLoader.load_fxml("sellerhomepageController.fxml");
                     } catch (IOException e) {
-                        System.out.println("Try again");
+                        make_alert.getInstance().make_alert("Error","Try again");
                     }
                 }
             }
         }
         else{
-            System.out.println("Try again");
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 
@@ -80,7 +84,7 @@ public class log_in_controller implements Initializable {
             fxmlLoader.load_fxml("sign_up.fxml");
         }
         catch(IOException e){
-            System.out.println("Try again");
+            make_alert.getInstance().make_alert("Error","Page loading failed");
         }
     }
 

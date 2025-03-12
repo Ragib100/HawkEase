@@ -42,57 +42,46 @@ public class bills_from_seller_controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Create sample location data
         location_infoList = FXCollections.observableArrayList(getSampleLocationData());
 
-        // Set up the location list view
         setupLocationListView();
 
-        // Ensure the main BorderPane and ListView can resize properly
         mainBorderPane.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         locationListView.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
     }
 
     private void setupLocationListView() {
-        // Set the items in the ListView
         locationListView.setItems(location_infoList);
 
-        // Ensure the ListView can resize properly
         locationListView.setMinHeight(100);
         locationListView.setMinWidth(200);
 
-        // Define a custom cell factory to show location info and Pay Bill button with center alignment
         locationListView.setCellFactory(listView -> new ListCell<location_info>() {
             private final HBox container = new HBox();
             private final TextField locationTextField = new TextField();
             private final Button payButton = new Button("Pay Bill");
 
             {
-                // Set up the container with center alignment
                 container.setSpacing(10);
                 container.setPadding(new Insets(5, 10, 5, 10));
-                container.setAlignment(Pos.CENTER); // Center align the content
-                container.setMinWidth(200); // Set minimum width
+                container.setAlignment(Pos.CENTER);
+                container.setMinWidth(200);
 
-                // Configure the location text field
                 locationTextField.setEditable(false);
                 locationTextField.setPrefWidth(250);
-                locationTextField.setMinWidth(150); // Set minimum width
-                locationTextField.setAlignment(Pos.CENTER); // Center text in the field
+                locationTextField.setMinWidth(150);
+                locationTextField.setAlignment(Pos.CENTER);
 
-                // Set up the pay button
                 payButton.setOnAction(event -> {
                     location_info location = getItem();
                     if (location != null) {
                         showPaymentPopup(location);
                     }
                 });
-                payButton.setMinWidth(70); // Ensure button doesn't disappear when resizing
+                payButton.setMinWidth(70);
 
-                // Add a spacer to push elements to the center
                 HBox.setHgrow(locationTextField, Priority.ALWAYS);
 
-                // Add components to the container
                 container.getChildren().addAll(locationTextField, payButton);
             }
 
@@ -108,10 +97,8 @@ public class bills_from_seller_controller implements Initializable {
                             location.getLatitude(), location.getLongitude()));
                     setGraphic(container);
 
-                    // Ensure the cell itself is center aligned
                     setAlignment(Pos.CENTER);
 
-                    // Make the cell respond to resize
                     setPrefWidth(container.getPrefWidth());
                 }
             }
@@ -120,34 +107,28 @@ public class bills_from_seller_controller implements Initializable {
 
     private void showPaymentPopup(location_info location) {
         try {
-            // Load the payment popup FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("payment_pop_up.fxml"));
             Parent root = loader.load();
 
-            // Create a new stage for the popup
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Payment for Location");
-            popupStage.setMinWidth(300); // Set minimum size for popup
+            popupStage.setMinWidth(300);
             popupStage.setMinHeight(200);
 
-            // Find and update the location label
             Label locationLabel = (Label) root.lookup("#locationLabel");
             if (locationLabel != null) {
                 locationLabel.setText(String.format("Location: %.6f, %.6f",
                         location.getLatitude(), location.getLongitude()));
             }
 
-            // Find transaction ID field
             TextField transactionIdField = (TextField) root.lookup("#transactionIdField");
 
-            // Set up the cancel button action
             Button cancelButton = (Button) root.lookup("#cancelButton");
             if (cancelButton != null) {
                 cancelButton.setOnAction(e -> popupStage.close());
             }
 
-            // Set up the submit button action
             Button submitButton = (Button) root.lookup("#submitButton");
             if (submitButton != null) {
                 submitButton.setOnAction(e -> {
@@ -158,18 +139,17 @@ public class bills_from_seller_controller implements Initializable {
                 });
             }
 
-            // Set the scene and show the popup
             Scene scene = new Scene(root);
             popupStage.setScene(scene);
             popupStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
+            make_alert.getInstance().make_alert("Error","Try again");
         }
     }
 
     private void processTransaction(location_info location, String transactionId) {
-        // Here you would implement the actual transaction processing
         System.out.println("Processing transaction: " + transactionId +
                 " for location [" + location.getLatitude() + ", " +
                 location.getLongitude() + "]");
@@ -178,10 +158,8 @@ public class bills_from_seller_controller implements Initializable {
             System.out.println("Bill processed successfully");
         }
         else{
-            System.out.println("Bill processing failed");
+            make_alert.getInstance().make_alert("Error","Failed to process transaction");
         }
-
-        // Add validation, database updates, etc.
     }
 
     private ArrayList<location_info> getSampleLocationData() {

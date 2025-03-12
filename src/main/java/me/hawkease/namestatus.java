@@ -26,11 +26,4 @@ public class namestatus {
         return name;
     }
 
-    public RadioButton getAcceptedRadio() {
-        return acceptedRadio;
-    }
-
-    public RadioButton getRejectedRadio() {
-        return rejectedRadio;
-    }
 }
