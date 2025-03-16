@@ -58,8 +58,8 @@ public class buyerhomepageController {
             page.getChildren().add(newContent);
         }
         catch (IOException e) {
-            System.out.println("Error in loading search_stalls.fxml: " + e.getMessage());
             e.printStackTrace();
+            make_alert.getInstance().make_alert("Error" , "Error in loading page");
         }
     }
 

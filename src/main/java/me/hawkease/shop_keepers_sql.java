@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class shop_keepers_sql {
     private Connection con;
@@ -117,6 +118,65 @@ public class shop_keepers_sql {
         }
         catch (Exception e) {
             System.out.println("Error updating locations: ");
+        }
+        return false;
+    }
+
+    public info_for_stall get_stall_info(double lat,double lon){
+        String query = "SELECT * FROM shop_keepers WHERE latitude = ? AND longitude = ?";
+        info_for_stall temp = null;
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setDouble(1, lat);
+            stmt.setDouble(2, lon);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                temp = new info_for_stall(rs.getString("shop_name"),rs.getString("shop_address"),rs.getString("product_type"));
+            }
+        }
+        catch (Exception e) {
+            make_alert.getInstance().make_alert("Error","Connection could not be established!");
+        }
+        return temp;
+    }
+
+    public HashMap<String, ArrayList<info_for_buyer_search>> get_info_for_buyer() {
+        HashMap<String, ArrayList<info_for_buyer_search>> result = new HashMap<>();
+        String query = "SELECT * FROM shop_keepers";
+
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int total = rs.getInt("Total_rating"), num = rs.getInt("number");
+                double rating = (num != 0 ? (double) total / num : 0);
+                String formattedRating = String.format("%.1f", rating);
+                info_for_buyer_search temp = new info_for_buyer_search(
+                        rs.getString("shop_name"),
+                        rs.getString("email"),
+                        rs.getString("shop_address"),
+                        formattedRating,
+                        rs.getInt("number")
+                );
+
+                String productType = rs.getString("product_type");
+                result.putIfAbsent(productType, new ArrayList<>()); // 🔥 Ensure ArrayList is initialized
+                result.get(productType).add(temp);
+            }
+        } catch (Exception e) {
+            make_alert.getInstance().make_alert("Error", "Connection could not be established!");
+        }
+        return result;
+    }
+
+    public boolean update_rating(int rat) {
+        String query = "UPDATE shop_keepers SET rating = rating+? WHERE email = ?";
+        try(PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setInt(1, rat);
+            stmt.setString(2, current_user.get_user().get_email());
+            int row = stmt.executeUpdate();
+            return row > 0;
+        }
+        catch (Exception e) {
+
         }
         return false;
     }

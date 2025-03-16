@@ -89,7 +89,8 @@ public class pendingReq implements Initializable {
             
             shop_keepers_sql temp = new shop_keepers_sql();
             if(!temp.insert(request.email(), request.lat(), request.lon())) return;
-            
+            send_email send = new send_email();
+            send.sendEmail(request.email(),"One of your requested locations is accepted");
             location_requests cur_loc = emailLocations.get(index);
             co_ordinate flag = new co_ordinate(cur_loc.lat(), cur_loc.lon());
             

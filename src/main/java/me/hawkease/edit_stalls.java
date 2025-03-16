@@ -27,6 +27,7 @@ public class edit_stalls implements map_controller {
     HashMap<location_info, Boolean> loc;
     mapviewer mapViewer;
     double latitude = -180, longitude = -180;
+    edit_popup_stall_controller popupController;
 
     @FXML
     void edit_the_current_stall(MouseEvent event) {
@@ -39,13 +40,11 @@ public class edit_stalls implements map_controller {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edit_stall_popup.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Get controller instance
-            edit_popup_stall_controller popupController = fxmlLoader.getController();
-
-            // Set parent reference
+            popupController = fxmlLoader.getController();
             popupController.setParentController(this);
+            popupController.set_co_ordinate(latitude, longitude);
+            popupController.load_data();
 
-            // Create a popup window
             Stage popupStage = new Stage();
             popupStage.setTitle("Edit Stall");
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -55,7 +54,6 @@ public class edit_stalls implements map_controller {
 
             // Set stage reference inside popup controller
             popupController.setStage(popupStage);
-
             popupStage.showAndWait();
         } catch (IOException e) {
             make_alert.getInstance().make_alert("Error", "Try again");
@@ -92,6 +90,7 @@ public class edit_stalls implements map_controller {
     public void setLocation(double lat, double lon) {
         latitude = lat;
         longitude = lon;
+        massage.setText(latitude + "," + longitude);
     }
 
     @Override

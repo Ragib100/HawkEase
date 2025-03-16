@@ -36,8 +36,6 @@ public class view_map {
 
            mapViewer.setAddressLocation(new GeoPosition(23.735,90.385));
            mapViewer.setZoom(current_zoom);
-
-
         });
     }
 }

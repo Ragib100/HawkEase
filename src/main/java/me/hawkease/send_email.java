@@ -8,7 +8,7 @@ public class send_email {
 
     private static final String SMTP_HOST = "smtp.gmail.com";
     private static final int SMTP_PORT = 587;
-    private static final String EMAIL_SUBJECT = "OTP for verification";
+    private static final String EMAIL_SUBJECT = "Hawkease: Hawker Management System";
 
     public void sendEmail(String recipientEmail, String messageText) {
         String senderEmail = System.getenv("email_id");

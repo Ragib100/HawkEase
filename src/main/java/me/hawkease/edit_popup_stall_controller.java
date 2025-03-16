@@ -11,10 +11,10 @@ public class edit_popup_stall_controller {
     @FXML private TextField shopNameField;
     @FXML private TextField shopAddressField;
     @FXML private ComboBox<String> categoryComboBox;
-    @FXML private Button submitButton;
 
     private Stage stage;
     private edit_stalls parentController; // Reference to the main controller
+    private double lat,lon;
 
     @FXML
     public void initialize() {
@@ -22,7 +22,11 @@ public class edit_popup_stall_controller {
         categoryComboBox.setValue("Food");
     }
 
-    // Method to set the parent controller (edit_stalls)
+    public void set_co_ordinate(double lat,double lon) {
+        this.lat = lat;
+        this.lon = lon;
+    }
+
     public void setParentController(edit_stalls parentController) {
         this.parentController = parentController;
     }
@@ -37,12 +41,18 @@ public class edit_popup_stall_controller {
         String shopAddress = shopAddressField.getText();
         String category = categoryComboBox.getValue();
 
-        // Pass data to edit_stalls controller
         if (parentController != null) {
             parentController.updateStallInfo(shopName, shopAddress, category);
         }
 
-        // Close the popup
         stage.close();
+    }
+
+    public void load_data(){
+        shop_keepers_sql sql = new shop_keepers_sql();
+        info_for_stall info = sql.get_stall_info(lat,lon);
+        shopNameField.setText(info.name());
+        shopAddressField.setText(info.address());
+        categoryComboBox.setValue(info.type());
     }
 }
